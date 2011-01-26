@@ -1,0 +1,1 @@
+$packages = gc .\.NugetFile | Foreach-Object {nuget install $_}
