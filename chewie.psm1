@@ -16,4 +16,7 @@ function nuget
 
 }
 
-gc $pwd\.NugetFile | Foreach-Object { $block = [scriptblock]::Create($_.ToString()); % $block;}
+function noms 
+{
+	gc $pwd\.NugetFile | Foreach-Object { $block = [scriptblock]::Create($_.ToString()); % $block;}
+}
