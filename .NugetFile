@@ -1,3 +1,4 @@
-ninject
-nunit
-fluentmigrator
+nuget "ninject" "2.0.1.0"
+nuget "nunit"
+nuget "fluentmigrator"
+nuget "fluentnhibernate"
