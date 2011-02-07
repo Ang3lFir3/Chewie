@@ -1,3 +1,5 @@
-install_to "lib"
-nuget "ninject" "2.0.1.0"
-nuget "nunit"
+install_to 'lib'
+
+nuget 'ninject' '2.0.1.0'
+nuget 'nunit'
+nuget 'random' '1.0.0' 'http://nuget.org'

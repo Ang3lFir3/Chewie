@@ -16,11 +16,15 @@ function nuget
 		[string] $name = $null,
 		
 		[Parameter(Position=1,Mandatory=0)]
-		[string] $version = ""
+		[string] $version = "",
+		
+		[Parameter(Position=2,Mandatory=0)]
+		[string] $source = ""
 		)
 		
 		$command = "nuget.exe install $name"
 		if($version -ne ""){$command += " -v $version"}
+		if($source -ne ""){$command += " -s $source"}
 		
 	invoke-expression $command
 
