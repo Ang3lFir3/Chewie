@@ -16,9 +16,11 @@ function nuget
 		[string] $name = $null,
 		
 		[Parameter(Position=1,Mandatory=0)]
+		[alias("v")]
 		[string] $version = "",
 		
 		[Parameter(Position=2,Mandatory=0)]
+		[alias("s")]
 		[string] $source = ""
 		)
 		
