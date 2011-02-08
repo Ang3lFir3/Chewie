@@ -1,3 +1,4 @@
+source 'http://random.org'
 install_to 'lib'
 
 nuget 'ninject' '2.0.1.0'
