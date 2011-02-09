@@ -32,7 +32,7 @@ I think you get the idea....
 ## using the module
 using the module is not much different than the script itself except for a couple of changes.  
 
-To init a Chewie file once the module is imported you can :
+To init a Chewie file once the module is imported you can :  
 PS>chewie-init
 
 Once you import the module you can get can get chewie doing its thing by calling :  
