@@ -29,4 +29,9 @@ example => nuget 'ninject' '2.0.1.0' 'http://somethingrandom.feed.org'
 example => nuget 'ninject  -source 'http://somethingrandom.feed.org' -v '2.0.1.0'   
 I think you get the idea....  
 
+## using the module
+using the module is not much different than the script itself except for a couple of changes. Once you import the module you can get can get chewie
+doing its thing by calling :  
+PS>gimmie-noms
+
 	

@@ -44,7 +44,7 @@ function nuget
 
 }
 
-function noms 
+function gimmie-noms 
 {
 	gc $pwd\.NugetFile | Foreach-Object { $block = [scriptblock]::Create($_.ToString()); % $block;}
 	if((get-location -stackname 'chewie_nuget').count -gt 0) {pop-location -stackname 'chewie_nuget'}
