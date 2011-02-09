@@ -29,3 +29,4 @@ example => nuget 'ninject' '2.0.1.0' 'http://somethingrandom.feed.org'
 example => nuget 'ninject  -source 'http://somethingrandom.feed.org' -v '2.0.1.0' 
 I think you get the idea....
 
+	
