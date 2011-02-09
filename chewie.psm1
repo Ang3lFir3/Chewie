@@ -49,3 +49,13 @@ function gimmie-noms
 	gc $pwd\.NugetFile | Foreach-Object { $block = [scriptblock]::Create($_.ToString()); % $block;}
 	if((get-location -stackname 'chewie_nuget').count -gt 0) {pop-location -stackname 'chewie_nuget'}
 }
+
+function chewie-init
+{
+	if(!(test-path $pwd\.NugetFile))
+	{
+		new-item -path $pwd -name .NugetFile -itemtype file
+		add-content $pwd\.NugetFile "install_to 'lib'"
+		add-content $pwd\.NugetFile "nuget 'machine.specifications'"
+	}
+}
