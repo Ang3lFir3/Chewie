@@ -7,7 +7,7 @@
     <owners>Ang3lFir3</owners>
     <projectUrl>http://github.com/Ang3lFir3/Chewie/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Package description</description>
+    <description>Giving Nuget some of the awesomeness of Bundler for ruby gems</description>
     <tags>Nuget Bundler Chewie</tags>
   </metadata>
   <files>
