@@ -38,4 +38,5 @@ PS>chewie-init
 Once you import the module you can get can get chewie doing its thing by calling :  
 PS>gimmie-noms
 
-	
+## Projects using Chewie
+https://github.com/codereflection/Giles  
