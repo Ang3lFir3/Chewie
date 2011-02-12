@@ -19,7 +19,7 @@ function install_to
 	push-location $path -stackname 'chewie_nuget'
 }
 
-function nuget 
+function chew 
 {
 	[CmdletBinding()]
 	param(

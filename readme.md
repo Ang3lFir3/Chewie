@@ -23,23 +23,23 @@ example => install_to 'lib'
 
 This will tell nuget to install the following nugets to the specified folder. Install_To will create the folder if it does not already exist.
 
-### nuget
-usage => nuget <name> [-v/-version <version_to_install>] [-s/-source <some_nuget_feed_url>]  
-example => nuget 'ninject'  
-example => nuget 'ninject' '2.0.1.0'  
-example => nuget 'ninject' -v '2.0.1.0'  
-example => nuget 'ninject' '2.0.1.0' 'http://somethingrandom.feed.org'  
-example => nuget 'ninject  -source 'http://somethingrandom.feed.org' -v '2.0.1.0'   
+### chew
+usage => chew <name> [-v/-version <version_to_install>] [-s/-source <some_nuget_feed_url>]  
+example => chew 'ninject'  
+example => chew 'ninject' '2.0.1.0'  
+example => chew 'ninject' -v '2.0.1.0'  
+example => chew 'ninject' '2.0.1.0' 'http://somethingrandom.feed.org'  
+example => chew 'ninject  -source 'http://somethingrandom.feed.org' -v '2.0.1.0'   
 I think you get the idea....  
 
-## using the module
+## using the powersheell module
 using the module is not much different than the script itself except for a couple of changes.  
 
 To init a Chewie file once the module is imported you can :  
-PS>chewie-init
+PS>Chewie-Init
 
 Once you import the module you can get can get chewie doing its thing by calling :  
-PS>gimmie-noms
+PS>Invoke-Chewie
 
 ## Projects using Chewie
 https://github.com/codereflection/Giles  

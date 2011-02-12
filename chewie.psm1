@@ -19,7 +19,7 @@ function install_to
 	push-location $path -stackname 'chewie_nuget'
 }
 
-function nuget 
+function chew 
 {
 	[CmdletBinding()]
 	param(
@@ -44,13 +44,13 @@ function nuget
 
 }
 
-function gimmie-noms 
+function Invoke-Chewie 
 {
 	gc $pwd\.NugetFile | Foreach-Object { $block = [scriptblock]::Create($_.ToString()); % $block;}
 	if((get-location -stackname 'chewie_nuget').count -gt 0) {pop-location -stackname 'chewie_nuget'}
 }
 
-function chewie-init
+function Chewie-Init
 {
 	if(!(test-path $pwd\.NugetFile))
 	{

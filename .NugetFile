@@ -1,7 +1,7 @@
 source 'http://random.org'
 install_to 'lib'
 
-nuget 'ninject' '2.0.1.0'
-nuget 'nunit'
-nuget 'random' -v '1.0.0' -s 'http://nuget.org' 
-nuget 'random' -version '1.0.0' -source 'http://nuget.org' 
+chew 'ninject' '2.0.1.0'
+chew 'nunit'
+chew 'random' -v '1.0.0' -s 'http://nuget.org' 
+chew 'random' -version '1.0.0' -source 'http://nuget.org' 
