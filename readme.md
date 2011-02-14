@@ -1,7 +1,8 @@
 The intent of Chewie is to bring some of the niceties of gems bundler to nuget.
  Chewie uses a file named .Nugetfile to find all the nugets and you want installed along with how and from where you would like to install them. Chewie is delivered as a set of powershell scripts and a powershell module.
 
-## Getting started 
+## Getting started  
+[Getting Started Video](http://vimeo.com/19931794) from my friend and Co-Worker [Bobby Johnson](https://github.com/Notmyself) he also gets credit for the name.  
 you can either grab the files from here or use nuget to get them. The package name is Chewie (amazing I know!).  
 Chewie makes the assumption that you have nuget.exe located somewhere in your path. This means that you will need to download it from [here](http://ci.nuget.org:8080/guestAuth/repository/download/bt4/.lastSuccessful/Console/NuGet.exe)  
 
