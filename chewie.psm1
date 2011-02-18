@@ -35,7 +35,7 @@ function chew
 		[string] $source = ""
 		)
 				
-		$command = "nuget.exe install $name"
+		$command = "install-package $name"
 		if($version -ne ""){$command += " -v $version"}
 		if($source -eq "" -and $script:default_source -ne ""){$source = $script:default_source}
 		if($source -ne ""){$command += " -s $source"}
