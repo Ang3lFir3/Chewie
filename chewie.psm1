@@ -9,6 +9,26 @@ function source
 		$script:default_source = $source
 }
 
+function FileExistsInPath
+{
+	param (
+		[Parameter(Position=0,Mandatory=$true)]
+		[string] $fileName = $null
+	)
+
+	$path = Get-Childitem Env:Path
+	$found = $false
+	foreach ($folder in $path.Value.Split(";"))
+	{
+		if (Test-Path "$folder\$fileName")
+		{
+			$found = $true;
+			break
+		}
+	}
+	Write-Output $found
+}
+
 function install_to
 {
 	param(
@@ -34,8 +54,10 @@ function chew
 		[alias("s")]
 		[string] $source = ""
 		)
-				
-		$command = "install-package $name"
+
+		$nuGetIsInPath = FileExistsInPath "NuGet.exe"
+		$command = ""
+		if($nuGetIsInPath){$command += "NuGet.exe install $name"} else {$command += "install-package $name"}
 		if($version -ne ""){$command += " -v $version"}
 		if($source -eq "" -and $script:default_source -ne ""){$source = $script:default_source}
 		if($source -ne ""){$command += " -s $source"}
