@@ -33,7 +33,7 @@ example => chew 'ninject' '2.0.1.0' 'http://somethingrandom.feed.org'
 example => chew 'ninject  -source 'http://somethingrandom.feed.org' -v '2.0.1.0'   
 I think you get the idea....  
 
-## using the powersheell module
+## Using the PowerShell module
 using the module is not much different than the script itself except for a couple of changes.  
 
 To init a Chewie file once the module is imported you can :  
