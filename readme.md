@@ -11,7 +11,7 @@ To create the sample .NugetFile, you can use the following commands to begin wor
 ### From the PowerShell Console
 PS>chewie-init.ps1  
 
-### From PackageManager Console
+### From Package Manager Console
 PM>Initialize-Chewie
 
 ## Configuration
@@ -38,7 +38,7 @@ example => chew 'ninject' '2.0.1.0' 'http://somethingrandom.feed.org'
 example => chew 'ninject  -source 'http://somethingrandom.feed.org' -v '2.0.1.0'   
 I think you get the idea....  
 
-## Using the PowerShell Module of Package Manager Console
+## Using the PowerShell Module or Package Manager Console
 Using the module is not much different than the script itself except for a couple of changes.  
 
 To init a Chewie file once the module is imported you can :  
