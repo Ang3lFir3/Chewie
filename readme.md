@@ -3,13 +3,18 @@ The intent of Chewie is to bring some of the niceties of gems bundler to nuget.
 
 ## Getting started  
 [Getting Started Video](http://vimeo.com/19931794) from my friend and Co-Worker [Bobby Johnson](https://github.com/Notmyself) he also gets credit for the name.  
-you can either grab the files from here or use nuget to get them. The package name is Chewie (amazing I know!).  
-Chewie makes the assumption that you have nuget.exe located somewhere in your path. This means that you will need to download it from [here](http://ci.nuget.org:8080/guestAuth/repository/download/bt4/.lastSuccessful/Console/NuGet.exe)  
+you can either grab the files from here or use nuget (Install-Package Chewie) to get them. The package name is Chewie (amazing I know!).  
+There are two ways to invoke Chewie. If you are in the PowerShell Console or ISE, Chewie makes the assumption that you have nuget.exe located somewhere in your path. This means that you will need to download it from [here](http://ci.nuget.org:8080/guestAuth/repository/download/bt4/.lastSuccessful/Console/NuGet.exe). If you are in the Package Manager Console in Visual Studio 2010, Chewie will load itself every time you load a solution in which you installed Chewie and will use the built-in package manager commands. 
 
+To create the sample .NugetFile, you can use the following commands to begin working with Chewie.
 
+### From the PowerShell Console
 PS>chewie-init.ps1  
-This will create the sample .NugetFile you can use to begin working with Chewie.  
 
+### From PackageManager Console
+PM>Initialize-Chewie
+
+## Configuration
 Below are some examples of the features in Chewie and how to use them.  
 
 ### source 
@@ -33,11 +38,11 @@ example => chew 'ninject' '2.0.1.0' 'http://somethingrandom.feed.org'
 example => chew 'ninject  -source 'http://somethingrandom.feed.org' -v '2.0.1.0'   
 I think you get the idea....  
 
-## using the powersheell module
-using the module is not much different than the script itself except for a couple of changes.  
+## Using the PowerShell Module of Package Manager Console
+Using the module is not much different than the script itself except for a couple of changes.  
 
 To init a Chewie file once the module is imported you can :  
-PS>Chewie-Init
+PS>Initialize-Chewie
 
 Once you import the module you can get can get chewie doing its thing by calling :  
 PS>Invoke-Chewie
