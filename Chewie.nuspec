@@ -10,11 +10,12 @@
     <description>Giving Nuget some of the awesomeness of Bundler for ruby gems</description>
     <tags>Nuget Bundler Chewie</tags>
   </metadata>
+  
   <files>
- 	<file src="readme.md" />
-	<file src="chewie-init.ps1" />
-	<file src="chewie.ps1" />
-	<file src="chewie.psm1" />
+    <file src="readme.md" />
+    <file src="chewie-init.ps1" />
+    <file src="chewie.ps1" />
+    <file src="chewie.psm1" />
+    <file src="init.ps1" target="tools" />
   </files>
 </package>
-
