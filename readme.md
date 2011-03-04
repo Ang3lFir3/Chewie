@@ -29,6 +29,11 @@ example => install_to 'lib'
 
 This will tell nuget to install the following nugets to the specified folder. Install_To will create the folder if it does not already exist.
 
+### version_packages  
+usage => version_packages
+
+The default behaviour of Chewie is to put packages into folders that do not include the version number. You can opt out of this behavior and have the default NuGet behavior of versioning folders by adding this to the top of your .NugetFile .  
+
 ### chew
 usage => chew <name> [-v/-version <version_to_install>] [-s/-source <some_nuget_feed_url>]  
 example => chew 'ninject'  
