@@ -1,4 +1,10 @@
 $default_source = ""
+$version_packages = $false
+
+function version_packages
+{
+	$script:version_packages = $true
+}
 
 function source
 {
@@ -52,7 +58,12 @@ function chew
 
 	$nuGetIsInPath = FileExistsInPath "NuGet.exe"
 	$command = ""
-	if($nuGetIsInPath) { $command += "NuGet.exe install" } else { $command += "install-package"	}
+	if($nuGetIsInPath) 
+	{
+		$command += "NuGet.exe install" 
+		if($script:version_packages -ne $true){$command += " -x"}
+		
+	} else { $command += "install-package"	}
 	$command += " $name"
 	
 	if($version -ne "") { $command += " -v $version" }
