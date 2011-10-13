@@ -1,3 +1,5 @@
+**NOTE** : Chewie works with [http://nugit.org/](nugit) as well see below for details
+
 The intent of Chewie is to bring some of the niceties of gems bundler to nuget.
  Chewie uses a file named .Nugetfile to find all the nugets and you want installed along with how and from where you would like to install them. Chewie is delivered as a set of powershell scripts and a powershell module.
 
@@ -18,13 +20,14 @@ PM>Initialize-Chewie
 Below are some examples of the features in Chewie and how to use them.  
 
 ### source 
-usage =>  source <some_nuget_feed_url>  
+usage =>  source \<some_nuget_feed_url\>  
 example => source 'http://nuget.random.org/'  
+example => source 'http://nugit.org/nuget'  **<< supports nugit as well**
 
 This will set the default source for all of you nugets. Use this if you plan to use some of feed other than the one defined in nuget.exe. 
 
 ### install_to
-usage => install_to <some_folder_name>  
+usage => install_to \<some_folder_name\>  
 example => install_to 'lib'  
 
 This will tell nuget to install the following nugets to the specified folder. Install_To will create the folder if it does not already exist.
@@ -40,7 +43,9 @@ example => chew 'ninject'
 example => chew 'ninject' '2.0.1.0'  
 example => chew 'ninject' -v '2.0.1.0'  
 example => chew 'ninject' '2.0.1.0' 'http://somethingrandom.feed.org'  
-example => chew 'ninject  -source 'http://somethingrandom.feed.org' -v '2.0.1.0'   
+example => chew 'ninject'  -source 'http://somethingrandom.feed.org' -v '2.0.1.0'  
+example => chew 'nugit-sample-project'  -source 'http://nugit.org/nuget'  **<< using nugit as package source**
+
 I think you get the idea....  
 
 ## Using the PowerShell Module or Package Manager Console
