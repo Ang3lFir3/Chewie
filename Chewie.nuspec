@@ -2,7 +2,7 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>Chewie</id>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <authors>Ang3lFir3</authors>
     <owners>Ang3lFir3</owners>
     <projectUrl>http://github.com/Ang3lFir3/Chewie/</projectUrl>
