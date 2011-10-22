@@ -1,1 +1,1 @@
-& nuget.exe pack .\Chewie.nuspec -o ..\packages -v
+& nuget.exe pack .\Chewie.nuspec -o ..\packages -verbose
