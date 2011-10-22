@@ -36,7 +36,20 @@ function install_to
 		[string] $path = $null
 	)
 		
-	if(!(test-path $path)) { new-item -path . -name $path -itemtype directory }
+	if(!(test-path $path)) 
+	{
+		if([System.IO.Path]::IsPathRooted($path))
+		{
+			$drive_letter = [System.IO.Path]::GetPathRoot($path)
+			$directory_name = $path.Replace($drive_letter, "")
+			new-item -path $drive_letter -name $directory_name -itemtype directory 
+		}
+		else
+		{
+			new-item -path . -name $path -itemtype directory 
+		}	
+	}
+
 	push-location $path -stackname 'chewie_nuget'
 }
 
