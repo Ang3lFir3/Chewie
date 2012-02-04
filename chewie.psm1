@@ -69,11 +69,11 @@ function chew
 		[string] $source = ""
 	)
 
-	$nuGetIsInPath = FileExistsInPath "NuGet.exe"
+	$nuGetIsInPath = (FileExistsInPath "NuGet.exe") -or (FileExistsInPath "NuGet.bat")
 	$command = ""
 		if($nuGetIsInPath) 
 	{
-		$command += "NuGet.exe install" 
+		$command += "NuGet install" 
 		if($script:version_packages -ne $true){$command += " -x"}
 		
 	} else { $command += "install-package"	}
