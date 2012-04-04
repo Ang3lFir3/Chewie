@@ -53,6 +53,32 @@ function install_to
 	push-location $path -stackname 'chewie_nuget'
 }
 
+function chocolate
+{
+ 	[CmdletBinding()]
+	param (
+		[Parameter(Position=0,Mandatory=$true)]
+		[string] $name = $null,
+		
+		[Parameter(Position=1,Mandatory=$false)]
+		[alias("v")]
+		[string] $version = "",
+		
+		[Parameter(Position=2,Mandatory=$false)]
+		[alias("s")]
+		[string] $source = ""
+	)
+ 
+	$command = "chocolatey install $name"
+	
+	if($version -ne "") { $command += " -v $version" }
+	if($source -eq "" -and $script:default_source -ne "") { $source = $script:default_source }
+	if($source -ne "") { $command += " -s $source" }
+		
+	invoke-expression $command
+
+}
+
 function chew 
 {
 	[CmdletBinding()]
