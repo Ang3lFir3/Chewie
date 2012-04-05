@@ -68,6 +68,13 @@ function chocolate
 		[alias("s")]
 		[string] $source = ""
 	)
+  
+  $choco_install = $env:ChocolateyInstall1
+  
+  if($choco_install -eq $null -or (test-path $choco_install -ErrorAction SilentlyContinue) -eq $false){
+    Write-Host "you need to have chocolatey installed before you can use the chocolate commands"
+    return
+  }
  
 	$command = "chocolatey install $name"
 	
