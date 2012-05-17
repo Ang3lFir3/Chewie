@@ -1,4 +1,6 @@
-**NOTE** : Chewie works with [http://nugit.org/](nugit) as well see below for details
+**NOTE** :  
+Chewie works with [nugit](http://nugit.org/) as well see below for details.  
+Chewie also now supports [Chocolatey](http://chocolatey.org/)  
 
 The intent of Chewie is to bring some of the niceties of gems bundler to nuget.
  Chewie uses a file named .Nugetfile to find all the nugets and you want installed along with how and from where you would like to install them. Chewie is delivered as a set of powershell scripts and a powershell module.
@@ -38,7 +40,7 @@ usage => version_packages
 The default behaviour of Chewie is to put packages into folders that do not include the version number. You can opt out of this behavior and have the default NuGet behavior of versioning folders by adding this to the top of your .NugetFile .  
 
 ### chew
-usage => chew <name> [-v/-version <version_to_install>] [-s/-source <some_nuget_feed_url>]  
+usage => chew <name> [-v/-version \<version_to_install\>] [-s/-source \<some_nuget_feed_url\>]  
 example => chew 'ninject'  
 example => chew 'ninject' '2.0.1.0'  
 example => chew 'ninject' -v '2.0.1.0'  
@@ -47,6 +49,14 @@ example => chew 'ninject'  -source 'http://somethingrandom.feed.org' -v '2.0.1.0
 example => chew 'nugit-sample-project'  -source 'http://nugit.org/nuget'  **<< using nugit as package source**
 
 I think you get the idea....  
+
+### chocolate
+usage => chocolate <chocolatey_package_name> [-v/-version \<version_to_install\>] [-s/-source \<some_nuget_feed_url\>]  
+example => chocolate 'console2'  
+example => chocolate 'console2' '2.0.0.1'  
+example => chocolate 'console2' -v '2.0.0.1'  
+example => chocolate 'console2' '2.0.0.1' 'http://somethingrandom.feed.org'  
+example => chocolate 'console2'  -source 'http://somethingrandom.feed.org' -v '2.0.0.1' 
 
 ## Using the PowerShell Module or Package Manager Console
 Using the module is not much different than the script itself except for a couple of changes.  
