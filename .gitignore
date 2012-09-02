@@ -4,3 +4,5 @@
 
 #nuget
 *.nupkg
+lib/
+[B|b]in

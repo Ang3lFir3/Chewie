@@ -32,6 +32,7 @@ function Get-VersionFromArchive {
   if(!(Test-Path $specPath)){ return $null }
   $versionString = ([xml] (get-content )).package.metadata.version
   rm $specPath
+  $targetVersion = $null
   if([Version]::TryParse($versionString, [ref] $targetVersion)) {
     $targetVersion
   } else {

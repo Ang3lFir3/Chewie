@@ -5,7 +5,7 @@ function Test-Outdated {
     [Parameter(Position=0,Mandatory=$true)] [string]$dependencyName
   )
   # TODO: See if we need to cache the calls to dependency version
-  $targets = @((nuget list "$dependencyName" -Source $dependency.source) | ? { $_.Split()[0] -eq "$dependencyName"})
+  $targets = @((nuget list "$dependencyName" -AllVersions -Source $dependency.source) | ? { $_.Split()[0] -eq "$dependencyName"})
   if($targets.Length -gt 1) {
     # TODO: throw error on ambiguous dependency
     # this should never be possible, but...
