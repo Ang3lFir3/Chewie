@@ -5,8 +5,8 @@ function Get-VersionFromArchive {
     [Parameter(Position=0,Mandatory=$true)] [string]$dependencyName,
     [Parameter(Position=1,Mandatory=$true)] [string]$archiveFile
   )
-  $versionFromArchiveName = Get-VersionFromArchiveName $dependencyName $archiveFile
-  if($versionFromArchiveName) {return $versionFromArchiveName}
+  $versionFromFileName = Get-VersionFromFileName $dependencyName $archiveFile
+  if($versionFromFileName) {return $versionFromFileName}
   $shell= new-object -com shell.application
   $targetDir = Split-Path "$archiveFile"
   $zipFileName = "$targetDir\$dependencyName.zip"

@@ -1,12 +1,12 @@
 
-function Get-VersionFromArchiveName {
+function Get-VersionFromFileName {
   [CmdletBinding()]
   param(
     [Parameter(Position=0,Mandatory=$true)] [string]$dependencyName,
-    [Parameter(Position=1,Mandatory=$true)] [string]$archiveFile
+    [Parameter(Position=1,Mandatory=$true)] [string]$fileName
   )
-  $extension = [IO.Path]::GetExtension($archiveFile)
-  $file = Split-Path -Leaf $archiveFile
+  $extension = [IO.Path]::GetExtension($fileName)
+  $file = Split-Path -Leaf $fileName
   $pattern = $chewie.VersionPattern
 
   if($file -imatch "$pattern\$extension$" -and $matches.Keys.Count -gt 1) {
