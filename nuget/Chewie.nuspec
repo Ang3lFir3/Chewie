@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Chewie</id>
+    <version>0.0.8</version>
+    <authors>Ang3lFir3,idavis</authors>
+    <owners>Ang3lFir3</owners>
+    <projectUrl>http://github.com/Ang3lFir3/Chewie/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Giving Nuget some of the awesomeness of Bundler for ruby gems</description>
+    <tags>Nuget Bundler Chewie</tags>
+  </metadata>
+</package>
