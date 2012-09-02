@@ -1,4 +1,4 @@
-
+# borrowed from psake https://github.com/psake/psake/blob/master/psake.psm1
 function Invoke-CommandWithThrow {
     [CmdletBinding()]
     param(

@@ -4,7 +4,7 @@ function Resolve-NugetCommand {
   param(
     [Parameter(Position=0,Mandatory=$true)][Hashtable]$dependency = $null
   )
-	
+  # TODO: This is far from finished. It is a copy from chewie 0.0.8 with variable updates.
   $nuGetIsInPath = @(get-command nuget.bat*,nuget.exe*,nuget.cmd*).Length -gt 0
   $command = ""
   if($nuGetIsInPath)  {

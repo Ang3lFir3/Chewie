@@ -33,14 +33,15 @@ function Invoke-Chew {
       return
     }
     
-	if($task -eq "update") {
+    if($task -eq "update") {
       if(Test-Outdated $dependencyName) {
-	  }
+        #TODO
+      }
       return
     }
 
     $command = Resolve-NugetCommand $dependency
-	
+
     Write-Output "invoke-expression $command -WhatIf"
     #invoke-expression $command -WhatIf
 
