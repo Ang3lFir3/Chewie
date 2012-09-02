@@ -1,4 +1,4 @@
-function Get-InstalledVersion {
+function Get-InstalledPackageVersion {
   [CmdletBinding()]
   param(
     [Parameter(Position=0,Mandatory=$true)] [string]$dependencyName
@@ -13,7 +13,7 @@ function Get-InstalledVersion {
   #    We have to extract the nuspec from the nugpk and extract
   #    ([xml] get-content $file).package.metadata.version
   $zips = Get-ChildItem $chewie.path "$dependencyName*.nupkg" -recurse
-  $versions = $zips | % {Get-VersionFromArchive $dependencyName $_ } | ? {$_ -ne $null}
-  $greatest = ($versions | Measure-Object -Max).Maximum
+  $versions = $zips | % {Get-VersionFromString $_ -IsFile} | ? {$_ -ne $null}
+  $greatest = Fine-MaxVersion $versions
   $greatest
 }

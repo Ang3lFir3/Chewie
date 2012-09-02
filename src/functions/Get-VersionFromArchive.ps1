@@ -5,7 +5,7 @@ function Get-VersionFromArchive {
     [Parameter(Position=0,Mandatory=$true)] [string]$dependencyName,
     [Parameter(Position=1,Mandatory=$true)] [string]$archiveFile
   )
-  $versionFromFileName = Get-VersionFromFileName $dependencyName $archiveFile
+  $versionFromFileName = Get-VersionFromString $archiveFile -IsFile
   if($versionFromFileName) {return $versionFromFileName}
   $shell= new-object -com shell.application
   $targetDir = Split-Path "$archiveFile"
@@ -32,10 +32,6 @@ function Get-VersionFromArchive {
   if(!(Test-Path $specPath)){ return $null }
   $versionString = ([xml] (get-content )).package.metadata.version
   rm $specPath
-  $targetVersion = $null
-  if([Version]::TryParse($versionString, [ref] $targetVersion)) {
-    $targetVersion
-  } else {
-    $null
-  }
+  $targetVersion = Get-VersionFromString $versionString
+  $targetVersion
 }

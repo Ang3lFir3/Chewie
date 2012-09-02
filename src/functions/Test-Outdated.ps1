@@ -19,7 +19,7 @@ function Test-Outdated {
   }
   
   $packageIsInstalled = Test-PackageInstalled $dependencyName
-  $installedVersions = Get-InstalledVersion $dependencyName
+  $installedVersions = Get-InstalledPackageVersion $dependencyName
   if($packageIsInstalled -and ($installedVersion.Length -eq 0)) {
     # TODO: throw error :(
   }
