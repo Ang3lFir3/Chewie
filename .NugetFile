@@ -2,8 +2,12 @@ source 'http://random.org'
 install_to 'lib'
 
 chew 'ninject' '2.0.1.0'
-chew 'nunit'
+chew 'nunit' -group dev
 chew 'random' -v '1.0.0' -s 'http://nuget.org' 
 chew 'foo' -version '1.0.0' -source 'http://nuget.org'
+
+new-group dev {
+  chew 'xunit' '2.0.0'
+}
 
 #chocolate 'console2' 
