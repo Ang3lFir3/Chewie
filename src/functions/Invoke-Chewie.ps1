@@ -5,15 +5,15 @@ function Invoke-Chewie {
     [ValidateSet('install','update', 'uninstall', 'outdated')]
     [string] $task = "install",
     [Parameter(Position = 1,Mandatory=$false)]
-    [string[]] $dependencyList = @(),
+    [string[]] $packageList = @(),
     [Parameter(Position=2,Mandatory=$false)]
     [string[]] $without = @()
   )
   
   try {
     $nugetFile = $chewie.nugetFile
-    if ($nugetFile -and !(test-path $nugetFile -pathType Leaf) -and (test-path $chewie.config_default.nugetFileName -pathType Leaf)) {
-      $nugetFile = $chewie.config_default.nugetFileName
+    if ($nugetFile -and !(test-path $nugetFile -pathType Leaf) -and (test-path $chewie.nugetFileName -pathType Leaf)) {
+      $nugetFile = $chewie.nugetFileName
     }
 
     # Execute the build file to set up the dependencies and defaults
@@ -25,7 +25,7 @@ function Invoke-Chewie {
   
     #Load-Configuration $chewie.build_script_dir
   
-    $chewie.Dependencies = @{}
+    $chewie.Packages = @{}
     $chewie.ExecutedDependencies = new-object System.Collections.Stack
     $chewie.callStack = new-object System.Collections.Stack
     $chewie.originalEnvPath = $env:path
@@ -36,15 +36,15 @@ function Invoke-Chewie {
 
     Invoke-NugetFile    
     
-    if ($dependencyList) {
-      foreach ($dependency in $dependencyList) {
-        Write-ColoredOutput "Invoke-Chew $task $dependency`n" -foregroundcolor DarkGreen
-        Invoke-Chew $task $dependency
+    if ($packageList) {
+      foreach ($package in $packageList) {
+        Write-ColoredOutput "Invoke-Chew $task $package`n" -foregroundcolor DarkGreen
+        Invoke-Chew $task $package
       }
-    } elseif ($chewie.Dependencies) {
-      foreach ($dependency in $chewie.Dependencies.Keys) {
-        Write-ColoredOutput "Invoke-Chew $task $dependency`n" -foregroundcolor DarkGreen
-        Invoke-Chew $task $dependency
+    } elseif ($chewie.Packages) {
+      foreach ($package in $chewie.Packages.Keys) {
+        Write-ColoredOutput "Invoke-Chew $task $package`n" -foregroundcolor DarkGreen
+        Invoke-Chew $task $package
       }
     } else {
       throw $messages.error_no_dependencies

@@ -5,57 +5,57 @@ function Invoke-Chew {
     [Parameter(Position=0,Mandatory=$true)]
     [ValidateSet('install','update', 'uninstall', 'outdated')]
     [string] $task = $null,
-    [Parameter(Position=1,Mandatory=$true)] [string]$dependencyName
+    [Parameter(Position=1,Mandatory=$true)] [string]$packageName
   )
 
-  Assert $dependencyName ($messages.error_invalid_dependency_name)
+  Assert $packageName ($messages.error_invalid_package_name)
 
-  $dependencyKey = $dependencyName.ToLower()
+  $packageKey = $packageName.ToLower()
 
-  Assert ($chewie.dependencies.Contains($dependencyKey)) ($messages.error_dependency_name_does_not_exist -f $dependencyName)
+  Assert ($chewie.Packages.Contains($packageKey)) ($messages.error_package_name_does_not_exist -f $packageName)
 
-  if ($chewie.ExecutedDependencies.Contains($dependencyKey))  { return }
+  if ($chewie.ExecutedDependencies.Contains($packageKey))  { return }
 
-  $dependency = $chewie.dependencies.$dependencyKey
+  $package = $chewie.Packages.$packageKey
 
   try {
     $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
-    $chewie.currentdependencyName = $dependencyName
+    $chewie.currentpackageName = $packageName
 
-    if ($chewie.config.dependencyNameFormat -is [ScriptBlock]) {
-      & $chewie.config.dependencyNameFormat $dependencyName
+    if ($chewie.packageNameFormat -is [ScriptBlock]) {
+      & $chewie.packageNameFormat $packageName
     } else {
-      Write-ColoredOutput ($chewie.config.dependencyNameFormat -f $dependencyName) -foregroundcolor Cyan
+      Write-ColoredOutput ($chewie.packageNameFormat -f $packageName) -foregroundcolor Cyan
     }
     
     if($task -eq "outdated") {
-      Test-Outdated $dependencyName
+      Test-Outdated $packageName
       return
     }
     
     if($task -eq "update") {
-      if(Test-Outdated $dependencyName) {
+      if(Test-Outdated $packageName) {
         #TODO
       }
       return
     }
 
-    $command = Resolve-NugetCommand $dependency
+    $command = Resolve-NugetCommand $package
 
     Write-Output "invoke-expression $command -WhatIf"
     #invoke-expression $command -WhatIf
 
-    $dependency.Duration = $stopwatch.Elapsed
+    $package.Duration = $stopwatch.Elapsed
   } catch {
-    if ($dependency.ContinueOnError) {
+    if ($package.ContinueOnError) {
       "-"*70
-      Write-ColoredOutput ($messages.continue_on_error -f $dependencyName,$_) -foregroundcolor Yellow
+      Write-ColoredOutput ($messages.continue_on_error -f $packageName,$_) -foregroundcolor Yellow
       "-"*70
-      $dependency.Duration = $stopwatch.Elapsed
+      $package.Duration = $stopwatch.Elapsed
     }  else {
       throw $_
     }
   }
 
-  $chewie.executeddependencies.Push($dependencyKey)
+  $chewie.executeddependencies.Push($packageKey)
 }

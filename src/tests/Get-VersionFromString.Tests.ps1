@@ -2,7 +2,7 @@ $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -ireplace ".tests.", "."
 . "$here\_Common.ps1"
 . "$here\..\functions\$sut"
-
+. "$here\..\functions\New-NuGetVersion.ps1"
 
 Describe "Ensure-VersionsAreParsedFromFileNames" {
   It "should return null if no version is present" {

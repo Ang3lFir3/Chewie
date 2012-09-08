@@ -19,16 +19,8 @@ function Get-VersionFromString {
     $versionString = $matches[1]
     if($matches.ContainsKey(2)) { $pre = $matches[2] }
     if($matches.ContainsKey(3)) { $build = $matches[3] }
-    $targetVersion = $null
-    if([Version]::TryParse($versionString, [ref] $targetVersion)) {
-      $result =  New-Object PSObject |
-        Add-Member -PassThru NoteProperty Version $targetVersion |
-        Add-Member -PassThru NoteProperty Pre $pre |
-        Add-Member -PassThru NoteProperty Build $build
-      $result
-    } else {
-      $null
-    }
+    $result = New-NuGetVersion $versionString $build $pre
+    return $result
   } else {
     $null
   }

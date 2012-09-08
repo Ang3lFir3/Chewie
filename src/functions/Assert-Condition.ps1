@@ -9,4 +9,7 @@ function Assert-Condition {
     throw ("Assert: " + $failureMessage) 
   }
 }
-New-Alias -Name Assert -Scope Script -Value Assert-Condition
+
+if(@(Get-Alias Assert -ErrorAction SilentlyContinue).Length -eq 0) {
+  New-Alias -Name Assert -Scope Script -Value Assert-Condition
+}

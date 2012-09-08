@@ -2,17 +2,17 @@
 function Get-VersionFromArchive {
   [CmdletBinding()]
   param(
-    [Parameter(Position=0,Mandatory=$true)] [string]$dependencyName,
+    [Parameter(Position=0,Mandatory=$true)] [string]$packageName,
     [Parameter(Position=1,Mandatory=$true)] [string]$archiveFile
   )
   $versionFromFileName = Get-VersionFromString $archiveFile -IsFile
   if($versionFromFileName) {return $versionFromFileName}
   $shell= new-object -com shell.application
   $targetDir = Split-Path "$archiveFile"
-  $zipFileName = "$targetDir\$dependencyName.zip"
+  $zipFileName = "$targetDir\$packageName.zip"
   cp "archiveFile" "$zipFileName"
   $zip = $shell.NameSpace("$archiveFile")
-  $specName = "$dependencyName*.nuspec"
+  $specName = "$packageName*.nuspec"
   $targetFolder = $shell.NameSpace($targetDir)
   $target = $zip.Items() | ? {$_.Name -ilike $specName}
   $specName = $target.Name

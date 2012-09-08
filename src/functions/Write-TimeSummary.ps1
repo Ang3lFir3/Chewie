@@ -6,7 +6,7 @@ function Write-TimeSummary($invokePsakeDuration) {
     $list = @()
     while ($chewie.ExecutedDependencies.Count -gt 0) {
         $taskKey = $chewie.ExecutedDependencies.Pop()
-        $task = $chewie.Dependencies.$taskKey
+        $task = $chewie.Packages.$taskKey
         $list += new-object PSObject -property @{
             Name = $task.Name;
             Duration = $task.Duration

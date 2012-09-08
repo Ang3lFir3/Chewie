@@ -12,6 +12,10 @@ function Set-PackagePath {
   $chewie.path = $path
 }
 
-New-Alias -Name install_to -Scope Script -Value Set-PackagePath
+if(@(Get-Alias install_to -ErrorAction SilentlyContinue).Length -eq 0) {
+  New-Alias -Name install_to -Scope Script -Value Set-PackagePath
+}
 
-New-Alias -Name Path -Scope Script -Value Set-PackagePath
+if(@(Get-Alias Path -ErrorAction SilentlyContinue).Length -eq 0) {
+  New-Alias -Name Path -Scope Script -Value Set-PackagePath
+}

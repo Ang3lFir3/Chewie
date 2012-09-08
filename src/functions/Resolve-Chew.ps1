@@ -18,7 +18,7 @@ function Resolve-Chew {
     $source = $chewie.default_source
   }
   
-  $newDependency = @{
+  $newpackage = @{
     Name = $name
     Version = $version
     Prerelease = $prerelease
@@ -29,11 +29,13 @@ function Resolve-Chew {
     Source = $source
   }
   
-  $dependencyKey = $name.ToLower()  
+  $packageKey = $name.ToLower()  
   
-  Assert (!$chewie.Dependencies.ContainsKey($dependencyKey)) ($messages.error_duplicate_dependency_name -f $name)
+  Assert (!$chewie.Packages.ContainsKey($packageKey)) ($messages.error_duplicate_package_name -f $name)
 
-  $chewie.Dependencies.$dependencyKey = $newDependency
+  $chewie.Packages.$packageKey = $newpackage
 }
 
-New-Alias -Name Chew -Scope Script -Value Resolve-Chew
+if(@(Get-Alias Chew -ErrorAction SilentlyContinue).Length -eq 0) {
+  New-Alias -Name Chew -Scope Script -Value Resolve-Chew
+}

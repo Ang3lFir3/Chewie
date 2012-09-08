@@ -3,7 +3,7 @@ param(
   [ValidateSet('install','update', 'uninstall', 'outdated')]
   [string] $task = "install",
   [Parameter(Position=1, Mandatory=$false)]
-  [string[]] $dependencyList = @(),
+  [string[]] $packageList = @(),
   [Parameter(Position=2,Mandatory=$false)]
   [string[]] $without = @(),
   [Parameter(Position=3,Mandatory=$false)]
@@ -21,7 +21,7 @@ $here = (Split-Path -parent $MyInvocation.MyCommand.Definition)
 $script:chewie = @{}
 
 if ($debug) {
-  $chewie.DebugPreference = "Continue";
+  $chewie.DebugPreference = "Continue"
 }
  
 # grab functions from files
@@ -41,4 +41,4 @@ if ($docs) {
   return
 }
 
-Invoke-Chewie $task $dependencyList $without
+Invoke-Chewie $task $packageList $without
