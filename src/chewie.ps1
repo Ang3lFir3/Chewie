@@ -15,7 +15,7 @@ param(
   #[Parameter(Position=6,Mandatory=$false)]
   #[switch] $debug = $false
   )
-cls
+
 $here = (Split-Path -parent $MyInvocation.MyCommand.Definition)
 
 $script:chewie = @{}
@@ -33,7 +33,7 @@ Resolve-Path $here\functions\*.ps1 |
 Load-Configuration
 
 if (-not $nologo) {
-  "chewie version {0}`nCopyright (c) 2012 Eric Ridgeway, Ian Davis`n" -f $chewie.version
+  "Chewie version {0}`nCopyright (c) 2012 Eric Ridgeway, Ian Davis`n" -f $chewie.version
 }
 
 if ($docs) {
