@@ -28,12 +28,12 @@ if ($debug) {
 
 Resolve-Path $here\functions\*.ps1 | 
     ? { -not ($_.ProviderPath.Contains(".Tests.")) } |
-    % { Write-Output "Loading: $_";. $_.ProviderPath }
+    % { . $_.ProviderPath }
 
 Load-Configuration
 
 if (-not $nologo) {
-  "Chewie version {0}`nCopyright (c) 2012 Eric Ridgeway, Ian Davis`n" -f $chewie.version
+  Write-Output $chewie.logo
 }
 
 if ($docs) {
