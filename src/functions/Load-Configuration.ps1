@@ -34,7 +34,8 @@ function Load-Configuration {
   $chewie.sources = (Get-PackageSources)
   $chewie.DebugPreference = "SilentlyContinue"
   $chewie.success = $false
-
+  $chewie.feed_uri = "http://nuget.org/api/v2/Packages"
+  $chewie.feed_package_filter = "?`$filter='{0}'%20eq%20Title"
   # Many packages don't support semver
   #$semver = '(\d+\.\d+\.\d+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?'
   # So the patch and fourth are optional :/
