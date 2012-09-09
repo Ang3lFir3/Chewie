@@ -6,6 +6,7 @@ convertfrom-stringdata @'
     error_bad_command = Error executing command {0}.
     error_duplicate_package_name = package {0} has already been defined.
     error_nugetfile_file_not_found = Could not find the NuGetFile {0}.
+    error_invalid_version_spec = The version specification {0} is not valid.
     Success = Chewie Succeeded!
 '@
 }
