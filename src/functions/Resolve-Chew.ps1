@@ -4,11 +4,9 @@ function Resolve-Chew {
   param(
     [Parameter(Position=0,Mandatory=$true)][string]$name = $null,
     [Parameter(Position=1,Mandatory=$false)][alias("v")][string]$version = $null,
-    [Parameter(Position=2,Mandatory=$false)][switch]$prerelease,
-    [Parameter(Position=3,Mandatory=$false)][alias("group")][string[]]$groups = $null,
-    [Parameter(Position=4,Mandatory=$false)][alias("s")][string]$source = $null,
-    [Parameter(Position=5,Mandatory=$false)][switch]$continueOnError = $false,
-    [Parameter(Position=6,Mandatory=$false)][string]$description = $null
+    [Parameter(Position=2,Mandatory=$false)][alias("group")][string[]]$groups = $null,
+    [Parameter(Position=3,Mandatory=$false)][alias("s")][string]$source = $null,
+    [Parameter(Position=4,Mandatory=$false)][alias("p")][switch]$prerelease = $false
   )
   if($groups -eq $null) {
     $groups = @($chewie.default_group_name)
@@ -23,8 +21,6 @@ function Resolve-Chew {
     Version = $version
     Prerelease = $prerelease
     Groups = $groups
-    ContinueOnError = $continueOnError
-    Description = $description
     Duration = [System.TimeSpan]::Zero
     Source = $source
   }
