@@ -13,7 +13,8 @@ function Get-InstalledPackageVersion {
   #    We have to extract the nuspec from the nugpk and extract
   #    ([xml] get-content $file).package.metadata.version
   $zips = Get-ChildItem $chewie.path "$packageName*.nupkg" -recurse
-  $versions = $zips | % {Get-VersionFromString $_ -IsFile} | ? {$_ -ne $null}
-  $greatest = Fine-MaxVersion $versions
-  $greatest
+  $versions = $zips | % {Get-VersionFromArchive $packageName $_.FullName} 
+  $versions = $versions | ? {$_ -ne $null}
+  $greatest = Find-MaxVersion $versions
+  return $greatest
 }

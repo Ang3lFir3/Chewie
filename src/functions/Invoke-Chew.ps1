@@ -28,15 +28,38 @@ function Invoke-Chew {
       Write-ColoredOutput ($chewie.packageNameFormat -f $packageName) -foregroundcolor Cyan
     }
     
+    if($task -eq "uninstall") {
+      if(!(Test-PackageInstalled $packageName)) {
+        Write-ColoredOutput "Could not uninstall $packageName. It is not installed." -foregroundcolor Magenta
+        return
+      }
+      $paths = Get-PackageInstallationPaths $packageName
+      $paths | % { Remove-Item -Recurse -Force $_ }
+      return
+    }
+
     if($task -eq "outdated") {
-      Test-Outdated $packageName
+      if(Test-Outdated $package.Name $package.Version) {
+        Write-ColoredOutput "Package $($package.name) is outdated" -ForegroundColor Yellow
+      } else {
+        Write-ColoredOutput "Package $($package.name) is up-to-date" -ForegroundColor Yellow
+      }
       return
     }
     
     if($task -eq "update") {
-      if(Test-Outdated $packageName) {
-        #TODO
+      if(Test-Outdated $package.Name $package.Version) {
+        Write-ColoredOutput "Package $($package.name) is outdated. Updating package." -ForegroundColor Yellow
+        Write-ColoredOutput "Package $($package.name) is outdated. Uninstalling old package." -ForegroundColor Yellow
+        Invoke-Chew "uninstall" $packageName
+        Write-ColoredOutput "Package $($package.name) is outdated. Installing new package." -ForegroundColor Yellow
+        Invoke-Chew "install" $packageName
       }
+      return
+    }
+
+    if(Test-PackageInstalled $packageName) {
+      Write-ColoredOutput "$packageName is already installed." -ForegroundColor Yellow
       return
     }
 

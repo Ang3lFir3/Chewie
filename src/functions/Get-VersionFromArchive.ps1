@@ -8,7 +8,7 @@ function Get-VersionFromArchive {
   $fileName = [IO.Path]::GetFileName($archiveFile)
   $versionFromFileName = Get-VersionFromString $fileName -IsFile
   if($versionFromFileName) {return $versionFromFileName}
-  $shell= new-object -com shell.application
+  $shell = new-object -com shell.application
   $targetDir = Split-Path "$archiveFile"
   $zipFileName = "$targetDir\$packageName.zip"
   cp "$archiveFile" "$zipFileName"
@@ -29,11 +29,12 @@ function Get-VersionFromArchive {
   [Runtime.Interopservices.Marshal]::ReleaseComObject($target)
   Remove-Variable "target"
   
-  rm $zipFileName
+  rm $zipFileName| out-null
   
   if(!(Test-Path $specPath)){ return $null }
   $versionString = ([xml] (get-content "$specPath")).package.metadata.version
   rm $specPath
+  
   $targetVersion = Get-VersionFromString $versionString
-  $targetVersion
+  return $targetVersion
 }

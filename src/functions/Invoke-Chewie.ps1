@@ -32,7 +32,7 @@ function Invoke-Chewie {
     $chewie.originalDirectory = get-location
     $chewie.chews = New-Object Collections.Queue
 
-    $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+    $stopwatch = [Diagnostics.Stopwatch]::StartNew()
 
     Invoke-NugetFile    
     

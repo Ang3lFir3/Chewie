@@ -5,6 +5,7 @@ function Get-VersionFromString {
     [Parameter(Position=0,Mandatory=$true)][string]$text,
     [Parameter(Position=1,Mandatory=$false)][switch]$isFile
   )
+
   $pattern = $chewie.VersionPattern
   if($isFile) { 
     $extension = [IO.Path]::GetExtension($text)
