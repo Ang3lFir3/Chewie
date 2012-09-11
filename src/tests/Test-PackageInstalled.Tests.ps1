@@ -5,10 +5,11 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -ireplace ".tests.", "."
 . "$here\..\functions\Assert-Condition.ps1"
 . "$here\..\functions\Get-VersionFromString.ps1"
 . "$here\..\functions\New-NuGetVersion.ps1"
+. "$here\..\functions\Get-PackageInstallationPaths.ps1"
 
 Describe "Ensure-InstalledPackagesCanBeFoundWhenNoVersionInformationIsGiven" {
   . "$here\_Common.ps1"
-  $chewie.default_source = "TestDrive:"
+  $chewie.path = "TestDrive:"
   Setup -Dir "Ninject"
   It "should find the package" {
     (Test-PackageInstalled "Ninject").should.be("true")
@@ -18,8 +19,7 @@ Describe "Ensure-InstalledPackagesCanBeFoundWhenNoVersionInformationIsGiven" {
 
 Describe "Ensure-InstalledPackagesCanBeFoundWhenASimpleVersionIsGiven" {
   . "$here\_Common.ps1"
-  $chewie.default_source = "TestDrive:\"
-  $chewie.version_packages = $true
+  $chewie.path = "TestDrive:\"
   Setup -Dir "Ninject.2.3"
   It "should find the package" {
     (Test-PackageInstalled "Ninject").should.be("true")
@@ -29,8 +29,7 @@ Describe "Ensure-InstalledPackagesCanBeFoundWhenASimpleVersionIsGiven" {
 
 Describe "Ensure-InstalledPackagesCanBeFoundWhenVersionWithDashedPrereleaseIsGiven" {
   . "$here\_Common.ps1"
-  $chewie.default_source = "TestDrive:\"
-  $chewie.version_packages = $true
+  $chewie.path = "TestDrive:\"
   Setup -Dir "Ninject.2.3-alpha"
   It "should find the package" {
     (Test-PackageInstalled "Ninject").should.be("true")
@@ -40,8 +39,7 @@ Describe "Ensure-InstalledPackagesCanBeFoundWhenVersionWithDashedPrereleaseIsGiv
 
 Describe "Ensure-InstalledPackagesCanBeFoundWhenVersionWithPrereleaseIsGiven" {
   . "$here\_Common.ps1"
-  $chewie.default_source = "TestDrive:\"
-  $chewie.version_packages = $true
+  $chewie.path = "TestDrive:\"
   Setup -Dir "Ninject.2.3alpha"
   It "should find the package" {
     (Test-PackageInstalled "Ninject").should.be("true")
@@ -51,8 +49,7 @@ Describe "Ensure-InstalledPackagesCanBeFoundWhenVersionWithPrereleaseIsGiven" {
 
 Describe "Ensure-InstalledPackagesCanBeFoundWhenVersionWithBuildIsGiven" {
   . "$here\_Common.ps1"
-  $chewie.default_source = "TestDrive:\"
-  $chewie.version_packages = $true
+  $chewie.path = "TestDrive:\"
   Setup -Dir "Ninject.2.3+1.0"
   It "should find the package" {
     (Test-PackageInstalled "Ninject").should.be("true")
