@@ -1,19 +1,27 @@
 param(
   [Parameter(Position=0,Mandatory=$false)]
-  [ValidateSet('install','update', 'uninstall', 'outdated')]
+  [ValidateSet('install','update', 'uninstall', 'outdated', 'init', 'help', '?')]
   [string] $task = "install",
   [Parameter(Position=1, Mandatory=$false)]
+  [Parameter(ParameterSetName='install')]
+  [Parameter(ParameterSetName='update')]
+  [Parameter(ParameterSetName='uninstall')]
+  [Parameter(ParameterSetName='outdated')]
   [string[]] $packageList = @(),
-  [Parameter(Position=2,Mandatory=$false)]
-  [string[]] $without = @(),
-  [Parameter(Position=3,Mandatory=$false)]
+  [Parameter(Position=2,Mandatory=$false,ParameterSetName='install')]
+  [string] $path,
+  [Parameter(Position=3,Mandatory=$false,ParameterSetName='install')]
+  [string] $source,
+  [Parameter(Position=4,Mandatory=$false,ParameterSetName='install')]
   [string] $nugetFile = $null,
+  [Parameter(Position=2,Mandatory=$false,ParameterSetName='update')]
+  [switch] $self,
+  [Parameter(Position=2,Mandatory=$false,ParameterSetName='outdated')]
+  [switch] $pre,
   [Parameter(Position=4,Mandatory=$false)]
-  [switch] $docs = $false,
+  [switch][alias("?")] $help = $false,
   [Parameter(Position=5,Mandatory=$false)]
-  [switch] $nologo = $false#,
-  #[Parameter(Position=6,Mandatory=$false)]
-  #[switch] $debug = $false
+  [switch] $nologo = $false
   )
 
 $here = (Split-Path -parent $MyInvocation.MyCommand.Definition)
@@ -36,7 +44,7 @@ if (-not $nologo) {
   Write-Output $chewie.logo
 }
 
-if ($docs) {
+if ($help -or ($task -eq "?") -or ($task -eq "?")) {
   Write-Documentation
   return
 }
