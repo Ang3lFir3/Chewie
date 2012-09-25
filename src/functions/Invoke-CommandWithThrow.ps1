@@ -13,4 +13,4 @@ function Invoke-CommandWithThrow {
     }
 }
 
-New-Alias -Name Exec -Scope Script -Value Invoke-CommandWithThrow
+Set-Alias -Name Exec -Scope Script -Value Invoke-CommandWithThrow

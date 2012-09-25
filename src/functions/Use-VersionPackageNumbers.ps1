@@ -6,14 +6,8 @@ function Use-VersionPackageNumbers {
   $chewie.version_packages = $value
 }
 
-if(@(Get-Alias Version_Packages -ErrorAction SilentlyContinue).Length -eq 0) {
-  New-Alias -Name Version_Packages -Scope Script -Value Use-VersionPackageNumbers
-}
+Set-Alias -Name Version_Packages -Scope Script -Value Use-VersionPackageNumbers
 
-if(@(Get-Alias VersionPackages -ErrorAction SilentlyContinue).Length -eq 0) {
-  New-Alias -Name VersionPackages -Scope Script -Value Use-VersionPackageNumbers
-}
+Set-Alias -Name VersionPackages -Scope Script -Value Use-VersionPackageNumbers
 
-if(@(Get-Alias IncludeVersion -ErrorAction SilentlyContinue).Length -eq 0) {
-  New-Alias -Name IncludeVersion -Scope Script -Value Set-PackagePath
-}
+Set-Alias -Name IncludeVersion -Scope Script -Value Use-VersionPackageNumbers

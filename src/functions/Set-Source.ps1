@@ -11,6 +11,4 @@ function Set-Source {
   }
 }
 
-if(@(Get-Alias Source -ErrorAction SilentlyContinue).Length -eq 0) {
-  New-Alias -Name Source -Scope Script -Value Set-Source
-}
+Set-Alias -Name Source -Scope Script -Value Set-Source
