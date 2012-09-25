@@ -1,2 +1,5 @@
 install_to 'lib'
-chew 'Pester'
+
+new-group dev {
+  chew 'Pester' '1.0.6'
+}
