@@ -1,5 +1,6 @@
+[CmdletBinding(DefaultParameterSetName='default')]
 param(
-  [Parameter(Position=0,Mandatory=$false)]
+  [Parameter(Position=0,Mandatory=$false,HelpMessage="You must specify which task to execute.")]
   [ValidateSet('install','update', 'uninstall', 'outdated', 'init', 'help', '?')]
   [string] $task = "install",
   [Parameter(Position=1, Mandatory=$false)]
@@ -7,6 +8,7 @@ param(
   [Parameter(ParameterSetName='update')]
   [Parameter(ParameterSetName='uninstall')]
   [Parameter(ParameterSetName='outdated')]
+  [Parameter(ParameterSetName='default')]
   [string[]] $packageList = @(),
   [Parameter(Position=2,Mandatory=$false,ParameterSetName='install')]
   [string] $path,
