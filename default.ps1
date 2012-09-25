@@ -1,0 +1,16 @@
+﻿properties {
+  $rootDir = Resolve-Path .
+}
+
+Task Default -Depends Test
+Task Package -Depends CreateNuGetPackage
+
+Task Test {
+  $pesterModule = @(Get-ChildItem $rootDir\* -recurse -include pester.psm1)
+  Import-Module $pesterModule
+  Invoke-Pester $rootDir\src\tests
+}
+
+Task CreateNuGetPackage {
+  & $rootDir\NuGetPackageBuilder.cmd
+}
