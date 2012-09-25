@@ -4,7 +4,7 @@
     [Parameter(Position=0,Mandatory=$true)][AllowEmptyString()][string]$versionSpec,
     [Parameter(Position=1,Mandatory=$true)][string]$versionString
   )
-  if([string]::IsNullOrEmpty($versionSpec)) {return true}
+  if([string]::IsNullOrEmpty($versionSpec)) {return $true}
   if($versionSpec.StartsWith('(')) {
    $exlusiveLowerBound = $true
   }

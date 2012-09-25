@@ -18,6 +18,8 @@ function Get-VersionFromString {
     # $matches[2] is the pre-release version 
     # $matches[3] is the build version
     $versionString = $matches[1]
+    $pre = $null
+    $build = $null
     if($matches.ContainsKey(2)) { $pre = $matches[2] }
     if($matches.ContainsKey(3)) { $build = $matches[3] }
     $result = New-NuGetVersion $versionString $build $pre

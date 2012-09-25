@@ -10,7 +10,7 @@ function New-NuGetVersion {
   if([Version]::TryParse($versionString, [ref] $targetVersion)) {
     $result =  New-Object PSObject |
       Add-Member -PassThru NoteProperty Version $targetVersion |
-      Add-Member -PassThru NoteProperty Pre $pre |
+      Add-Member -PassThru NoteProperty Pre $prerelease |
       Add-Member -PassThru NoteProperty Build $build |
       Add-Member -PassThru -Force ScriptMethod ToString { "{0}{1}{2}" -f @($this.Version, $this.Pre, $this.Build) }
     $result

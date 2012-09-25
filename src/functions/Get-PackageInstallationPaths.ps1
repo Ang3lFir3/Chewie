@@ -4,6 +4,7 @@ function Get-PackageInstallationPaths {
   param(
     [Parameter(Position=0,Mandatory=$true)] [string]$packageName
   )
+  if(!(Test-Path $chewie.path)) {return @()}
   $directoryNames = @(gci $chewie.path | ? { $_.PSIsContainer } | %{ $_.FullName })
   if($directoryNames.Length -eq 0) {return @()}
   $mapping = @{}
