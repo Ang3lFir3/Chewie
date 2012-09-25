@@ -34,7 +34,7 @@ function Invoke-Chewie {
 
     $stopwatch = [Diagnostics.Stopwatch]::StartNew()
 
-    Invoke-NugetFile    
+    Invoke-NugetFile $chewie.build_script_file.FullName   
     
     if ($packageList) {
       foreach ($package in $packageList) {

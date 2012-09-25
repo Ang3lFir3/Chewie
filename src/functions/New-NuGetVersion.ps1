@@ -11,7 +11,8 @@ function New-NuGetVersion {
     $result =  New-Object PSObject |
       Add-Member -PassThru NoteProperty Version $targetVersion |
       Add-Member -PassThru NoteProperty Pre $pre |
-      Add-Member -PassThru NoteProperty Build $build
+      Add-Member -PassThru NoteProperty Build $build |
+      Add-Member -PassThru -Force ScriptMethod ToString { "{0}{1}{2}" -f @($this.Version, $this.Pre, $this.Build) }
     $result
   } else {
     $null

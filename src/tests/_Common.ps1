@@ -1,6 +1,8 @@
 $here = Split-Path -Parent $MyInvocation.MyCommand.Definition
-$functions = Resolve-Path $here\..\functions
-. $functions\Load-Configuration.ps1
+Resolve-Path $here\..\functions\*.ps1 | 
+    ? { -not ($_.ProviderPath.Contains(".Tests.")) } |
+    % { . $_.ProviderPath }
+    
 Load-Configuration
 $chewie.Packages = @{}
 $chewie.ExecutedDependencies = new-object System.Collections.Stack

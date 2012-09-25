@@ -4,19 +4,22 @@ function Resolve-NugetCommand {
   param(
     [Parameter(Position=0,Mandatory=$true)][Hashtable]$package = $null
   )
-  # TODO: This is far from finished. It is a copy from chewie 0.0.8 with variable updates.
-  $nuGetIsInPath = @(get-command nuget.bat*,nuget.exe*,nuget.cmd*).Length -gt 0
+  $nuGetIsInPath = @(get-command nuget.bat*,nuget.exe*,nuget.cmd* -ErrorAction SilentlyContinue).Length -gt 0
   $command = ""
   if($nuGetIsInPath)  {
     $command += "NuGet install" 
-    if($chewie.version_packages -ne $true){$command += " -x"}
   } else {
-    $command += "install-package"
+    Assert (@(get-command install-package -ErrorAction SilentlyContinue).Length -eq 1) $messages.error_no_valid_nuget_command_found
+    $command += "install-package"  
   }
+  
   $command += " $($package.name)"
-
-  if(![string]::IsNullOrEmpty($version)) { $command += " -v $($package.version)" }
+  if($chewie.version_packages -ne $true){$command += " -x"}
+  $command += " -o $(Get-SafeFilePath $chewie.path)"
+  $maxVersion = Get-MaxCompatibleVersion $package.Name $package.Version
+  $versionString = ("{0}{1}{2}" -f $maxVersion.Version.ToString(), $maxVersion.Pre, $maxVersion.Build).Trim()
+  if(![string]::IsNullOrEmpty($versionString)) { $command += " -v $versionString" }
   $source = $package.source
-  if($source -ne "") { $command += " -s $source" }
+  if(![string]::IsNullOrEmpty($source)) { $command += " -s $source" }
   $command
 }

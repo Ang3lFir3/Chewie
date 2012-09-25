@@ -6,17 +6,12 @@ function Test-Outdated {
     [Parameter(Position=1,Mandatory=$true)][AllowEmptyString()][string]$versionSpec
   )
   if(!(Test-PackageInstalled $packageName)) {
-    Write-Host "$packageName is not installed."
+    Write-ColoredOutput "$packageName is not installed." -ForegroundColor Yellow
     return $true
   }
-  [xml]$targets = Get-PackageList $packageName
-  $versions = $targets.feed.entry | %{ (Get-VersionFromString $_.properties.version) }
-  $matchingVersions = $versions | ? { Test-VersionCompatibility $versionSpec $_.Version.ToString() }
-  $maxCompatibleVersion = Find-MaxVersion $matchingVersions
+  $maxCompatibleVersion = Get-MaxCompatibleVersion $packageName $versionSpec
   $installedVersion = Get-InstalledPackageVersion $packageName
-  Write-Host "The highest installed version found was $installedVersion"
-  Write-Host "The highest compatible version found was $maxCompatibleVersion"
   $trueMaxVersion = Find-MaxVersion @($maxCompatibleVersion,$installedVersion)
-  return ($trueMaxVersion -ne $installedVersion)
+  [bool]$upToDate = "$trueMaxVersion" -eq "$installedVersion"
+  return !$upToDate
 }
-

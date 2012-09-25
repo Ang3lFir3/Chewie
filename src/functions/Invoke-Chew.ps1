@@ -17,15 +17,15 @@ function Invoke-Chew {
   if ($chewie.ExecutedDependencies.Contains($packageKey))  { return }
 
   $package = $chewie.Packages.$packageKey
-
+  
   try {
     $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
     $chewie.currentpackageName = $packageName
 
     if ($chewie.packageNameFormat -is [ScriptBlock]) {
-      & $chewie.packageNameFormat $packageName
+      & $chewie.packageNameFormat $task $packageName
     } else {
-      Write-ColoredOutput ($chewie.packageNameFormat -f $packageName) -foregroundcolor Cyan
+      Write-ColoredOutput ($chewie.packageNameFormat -f $task, $packageName) -foregroundcolor Cyan
     }
     
     if($task -eq "uninstall") {
@@ -33,27 +33,33 @@ function Invoke-Chew {
         Write-ColoredOutput "Could not uninstall $packageName. It is not installed." -foregroundcolor Magenta
         return
       }
+      
       $paths = Get-PackageInstallationPaths $packageName
-      $paths | % { Remove-Item -Recurse -Force $_ }
+      $paths | % {
+        Write-ColoredOutput "Uninstalling package $($package.name) from $($_|out-string)" -ForegroundColor Green
+        Remove-Item -Recurse -Force $_ 
+      }
       return
     }
 
     if($task -eq "outdated") {
       if(Test-Outdated $package.Name $package.Version) {
-        Write-ColoredOutput "Package $($package.name) is outdated" -ForegroundColor Yellow
+        Write-ColoredOutput "Package $($package.name) is outdated" -ForegroundColor Green
       } else {
-        Write-ColoredOutput "Package $($package.name) is up-to-date" -ForegroundColor Yellow
+        Write-ColoredOutput "Package $($package.name) is up-to-date" -ForegroundColor Green
       }
       return
     }
     
     if($task -eq "update") {
-      if(Test-Outdated $package.Name $package.Version) {
-        Write-ColoredOutput "Package $($package.name) is outdated. Updating package." -ForegroundColor Yellow
-        Write-ColoredOutput "Package $($package.name) is outdated. Uninstalling old package." -ForegroundColor Yellow
+      Write-ColoredOutput "Package $($package.name) v$($package.version) is being updated." -ForegroundColor Green
+      [bool]$isOutdated = Test-Outdated $package.Name $package.Version
+      if($isOutdated) {
+        Write-ColoredOutput "Package $($package.name) is outdated. Updating package." -ForegroundColor Green
         Invoke-Chew "uninstall" $packageName
-        Write-ColoredOutput "Package $($package.name) is outdated. Installing new package." -ForegroundColor Yellow
         Invoke-Chew "install" $packageName
+      } else {
+        Write-ColoredOutput "Package $($package.name) is up-to-date." -ForegroundColor Green
       }
       return
     }
@@ -65,14 +71,14 @@ function Invoke-Chew {
 
     $command = Resolve-NugetCommand $package
 
-    Write-Output "invoke-expression $command -WhatIf"
-    #invoke-expression $command -WhatIf
+    Write-Output "Running: invoke-expression $command"
+    invoke-expression $command
 
     $package.Duration = $stopwatch.Elapsed
   } catch {
     if ($package.ContinueOnError) {
       "-"*70
-      Write-ColoredOutput ($messages.continue_on_error -f $packageName,$_) -foregroundcolor Yellow
+      Write-ColoredOutput ($messages.continue_on_error -f $packageName,$_) -foregroundcolor Magenta
       "-"*70
       $package.Duration = $stopwatch.Elapsed
     }  else {

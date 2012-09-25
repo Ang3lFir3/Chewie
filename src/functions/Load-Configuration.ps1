@@ -7,6 +7,7 @@ convertfrom-stringdata @'
     error_duplicate_package_name = package {0} has already been defined.
     error_nugetfile_file_not_found = Could not find the NuGetFile {0}.
     error_invalid_version_spec = The version specification {0} is not valid.
+    error_no_valid_nuget_command_found = Neither the NuGet command line nor the NuGet PowerShell commands are available.
     Success = Chewie Succeeded!
 '@
 }
@@ -28,7 +29,7 @@ function Load-Configuration {
   } else {
     $chewie.nugetFile = ".NugetFile"
   }
-  $chewie.packageNameFormat = "Executing {0}"
+  $chewie.packageNameFormat = "{0} {1}"
   $chewie.logo = "Chewie version {0}`nCopyright (c) 2012 Eric Ridgeway, Ian Davis`n" -f $chewie.version
   $chewie.verboseError = $true
   $chewie.coloredOutput = $true
@@ -57,7 +58,12 @@ function Load-Configuration {
 }
 
 function Get-PackageSources {
-  $packageSources = ([xml] (type "$env:AppData\NuGet\NuGet.config")).configuration.packageSources
+  $nugetConfig = "$env:AppData\NuGet\NuGet.config"
+  if(!(Test-Path $nugetConfig)) {
+    return @{}
+  }
+
+  $packageSources = ([xml] (type $nugetConfig)).configuration.packageSources
   $sources = $packageSources | % {$_.add} | % {$set = @{}} {$set[$_.Key]=$_.Value} {$set}
   $sources
 }
