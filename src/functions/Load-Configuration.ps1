@@ -64,6 +64,6 @@ function Get-PackageSources {
   }
 
   $packageSources = ([xml] (type $nugetConfig)).configuration.packageSources
-  $sources = $packageSources | % {$_.add} | % {$set = @{}} {$set[$_.Key]=$_.Value} {$set}
+  $sources = $packageSources | % {$_.add} | % {$set = @{}} {if($_ -ne $null){$set[$_.Key]=$_.Value}} {$set}
   $sources
 }
