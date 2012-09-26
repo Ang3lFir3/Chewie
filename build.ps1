@@ -14,7 +14,7 @@
 )
 
 $psake = (Get-ChildItem . psake.ps1 -Recurse)
-if($psake.Length -eq 0) {
+if($psake.Length -lt 1) {
   $scriptPath = (Split-Path -parent $MyInvocation.MyCommand.Definition)
   . $scriptPath\src\chewie.ps1 install -nugetFile $scriptPath\.NugetFile
 }
