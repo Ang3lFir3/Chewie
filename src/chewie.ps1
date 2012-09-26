@@ -26,19 +26,13 @@ param(
   [switch] $nologo = $false
   )
 
-$here = (Split-Path -parent $MyInvocation.MyCommand.Definition)
-
+$here = $(Split-Path -parent $script:MyInvocation.MyCommand.path)
+  
 $script:chewie = @{}
 
 if ($debug) {
   $chewie.DebugPreference = "Continue"
 }
- 
-# grab functions from files
-
-Resolve-Path $here\functions\*.ps1 | 
-    ? { -not ($_.ProviderPath.Contains(".Tests.")) } |
-    % { . $_.ProviderPath }
 
 Load-Configuration
 
@@ -46,9 +40,11 @@ if (-not $nologo) {
   Write-Output $chewie.logo
 }
 
-if ($help -or ($task -eq "?") -or ($task -eq "?")) {
+if ($help -or ($task -eq "?") -or ($task -eq "-?")) {
   Write-Documentation
   return
 }
+
+Import-Module (Join-Path $here chewie.psm1)
 
 Invoke-Chewie $task $packageList $without
