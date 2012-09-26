@@ -14,4 +14,7 @@ Add your directory with the nupkg to a custom feed.
 install-package chewie -version 2.0.0
 
 ### To install Chewie outside of VS
-nuget install chewie -x -v 2.0.0;.\Chewie\tools\init.ps1 "" $pwd\Chewie\tools
+nuget install chewie -x -v 2.0.0;.\Chewie\tools\init.ps1 "" $pwd\Chewie\tools  
+
+##License  
+This software is released under the MIT License
