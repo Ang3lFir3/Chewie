@@ -49,11 +49,3 @@ function Remove-ItemRecurseForce {
 }
 
 Install-Module "Chewie" (Join-Path $toolsPath src)
-
-# remove everything as we have copied it over.
-$inVs = @(get-command Install-Package -ErrorAction SilentlyContinue).Length -eq 1
-if($inVs) {
-  Uninstall-Package Chewie
-} else {
-  Remove-ItemRecurseForce $toolsPath\..
-}

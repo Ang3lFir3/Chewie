@@ -14,3 +14,11 @@ Task Test {
 Task CreateNuGetPackage {
   & $rootDir\NuGetPackageBuilder.cmd
 }
+
+Task TestChocolateyPackageInstallation {
+  cinst chewie -source "$pwd"
+}
+
+Task ? {
+ Write-Documentation
+}
