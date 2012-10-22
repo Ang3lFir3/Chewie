@@ -8,6 +8,8 @@ convertfrom-stringdata @'
     error_nugetfile_file_not_found = Could not find the NuGetFile {0}.
     error_invalid_version_spec = The version specification {0} is not valid.
     error_no_valid_nuget_command_found = Neither the NuGet command line nor the NuGet PowerShell commands are available.
+    error_package_not_found = The package {0} was not found. Please correct the name or try another feed source.
+    warn_package_not_in_nugetfile = {0} is not in the NuGetFile. Be sure to add this dependency if you want to keep it.
     Success = Chewie Succeeded!
 '@
 }
@@ -21,7 +23,7 @@ function Load-Configuration {
   if(!$chewie) {
     $script:chewie = @{}
   }
-  $chewie.version = "2.0.0alpha"
+  $chewie.version = "2.0.0beta"
   $chewie.originalErrorActionPreference = $global:ErrorActionPreference
   $chewie.default_group_name = "default"
   if($nugetFile) {
@@ -45,7 +47,7 @@ function Load-Configuration {
   #$chewie.VersionPattern = '(\d+\.\d+(?:\.\d+)?(?:\.\d+)?)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?'
   # But as also have to support NuGet's choice to ignore the - with a pre-release
   $chewie.VersionPattern = '(\d+\.\d+(?:\.\d+)?(?:\.\d+)?)(?:-?([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?'
-  
+
   $configFilePath = (join-path $configdir "chewie-config.ps1")
 
   if (test-path $configFilePath -pathType Leaf) {
@@ -55,15 +57,4 @@ function Load-Configuration {
       throw "Error Loading Configuration from chewie-config.ps1: " + $_
     }
   }
-}
-
-function Get-PackageSources {
-  $nugetConfig = "$env:AppData\NuGet\NuGet.config"
-  if(!(Test-Path $nugetConfig)) {
-    return @{}
-  }
-
-  $packageSources = ([xml] (type $nugetConfig)).configuration.packageSources
-  $sources = $packageSources | % {$_.add} | % {$set = @{}} {if($_ -ne $null){$set[$_.Key]=$_.Value}} {$set}
-  $sources
 }

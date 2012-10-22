@@ -6,8 +6,8 @@ function Use-VersionPackageNumbers {
   $chewie.version_packages = $value
 }
 
-Set-Alias -Name Version_Packages -Scope Script -Value Use-VersionPackageNumbers
+Set-Alias -Name Version_Packages -Value Use-VersionPackageNumbers
 
-Set-Alias -Name VersionPackages -Scope Script -Value Use-VersionPackageNumbers
+Set-Alias -Name VersionPackages -Value Use-VersionPackageNumbers
 
-Set-Alias -Name IncludeVersion -Scope Script -Value Use-VersionPackageNumbers
+Set-Alias -Name IncludeVersion -Value Use-VersionPackageNumbers

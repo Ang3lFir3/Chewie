@@ -21,14 +21,8 @@
 
 #Requires -Version 2.0
 
-if (Get-Module chewie) { return }
 $here = (Split-Path -parent $MyInvocation.MyCommand.Definition)
 
-Resolve-Path $here\functions\*.ps1 | % { . $_.ProviderPath }
+Resolve-Path $here\*.ps1 | % { . $_.ProviderPath }
 
-[string]$content = Get-Content $here\chewie.ps1 -Delimiter ([Environment]::NewLine)
-$block = [ScriptBlock]::Create($content)
-
-Invoke-Expression "function chewie { $block }"
-
-Export-ModuleMember -function chewie
+Export-ModuleMember -function Chewie

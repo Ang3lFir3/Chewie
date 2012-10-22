@@ -11,13 +11,15 @@ function Invoke-Chew {
   Assert $packageName ($messages.error_invalid_package_name)
 
   $packageKey = $packageName.ToLower()
-
-  Assert ($chewie.Packages.Contains($packageKey)) ($messages.error_package_name_does_not_exist -f $packageName)
-
-  if ($chewie.ExecutedDependencies.Contains($packageKey))  { return }
-
+  
+  if(!$chewie.Packages.Contains($packageKey)) {
+    Write-ColoredOutput ($messages.warn_package_not_in_nugetfile -f $packageName) -ForegroundColor Magenta
+    Resolve-Chew $packageName
+  }
   $package = $chewie.Packages.$packageKey
   
+  if ($chewie.ExecutedDependencies.Contains($packageKey))  { return }
+
   try {
     $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
     $chewie.currentpackageName = $packageName
@@ -71,7 +73,7 @@ function Invoke-Chew {
 
     $command = Resolve-NugetCommand $package
 
-    Write-Output "Running: invoke-expression $command"
+    Write-Debug "Running: invoke-expression $command"
     invoke-expression $command
 
     $package.Duration = $stopwatch.Elapsed

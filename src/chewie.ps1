@@ -1,3 +1,4 @@
+function chewie {
 [CmdletBinding(DefaultParameterSetName='default')]
 param(
   [Parameter(Position=0,Mandatory=$false,HelpMessage="You must specify which task to execute.")]
@@ -10,11 +11,11 @@ param(
   [Parameter(ParameterSetName='outdated')]
   [Parameter(ParameterSetName='default')]
   [string[]] $packageList = @(),
-  [Parameter(Position=2,Mandatory=$false,ParameterSetName='install')]
+  [Parameter(Position=2,Mandatory=$false,ParameterSetName='default')]
   [string] $path,
-  [Parameter(Position=3,Mandatory=$false,ParameterSetName='install')]
+  [Parameter(Position=3,Mandatory=$false,ParameterSetName='default')]
   [string] $source,
-  [Parameter(Position=4,Mandatory=$false,ParameterSetName='install')]
+  [Parameter(Position=4,Mandatory=$false,ParameterSetName='default')]
   [string] $nugetFile = $null,
   [Parameter(Position=2,Mandatory=$false,ParameterSetName='update')]
   [switch] $self,
@@ -25,26 +26,41 @@ param(
   [Parameter(Position=5,Mandatory=$false)]
   [switch] $nologo = $false
   )
+  try {
+    $here = $(Split-Path -parent $script:MyInvocation.MyCommand.path)
+    Resolve-Path $here\functions\*.ps1 | % { . $_.ProviderPath }
 
-$here = $(Split-Path -parent $script:MyInvocation.MyCommand.path)
-  
-$script:chewie = @{}
+    Load-Configuration
 
-if ($debug) {
-  $chewie.DebugPreference = "Continue"
+    if ($debug) {
+      $chewie.DebugPreference = "Continue"
+    }
+
+    if (-not $nologo) {
+      Write-Output $chewie.logo
+    }
+
+    if ($help -or ($task -eq "?") -or ($task -eq "-?")) {
+      Write-Documentation
+      return
+    }
+
+    if($task -eq "init") {
+      if(!(Test-Path $chewie.nugetFile)) {
+        Write-Output "Creating $($chewie.nugetFile)"
+        New-Item $chewie.nugetFile -ItemType File | Out-Null
+        Add-Content $chewie.nugetFile "install_to 'lib'"
+      }
+
+      $packageList | % { Add-Content $chewie.nugetFile "chew '$_'" }
+      return
+    }
+
+    if($nugetFile) { $chewie.nugetFile = $nugetFile }
+
+    Invoke-Chewie $task $packageList $without
+  } finally {
+   if(Get-Module chewie) {Remove-Module chewie -Force}
+   rm function:\chewie
+ }
 }
-
-Load-Configuration
-
-if (-not $nologo) {
-  Write-Output $chewie.logo
-}
-
-if ($help -or ($task -eq "?") -or ($task -eq "-?")) {
-  Write-Documentation
-  return
-}
-
-Import-Module (Join-Path $here chewie.psm1)
-
-Invoke-Chewie $task $packageList $without

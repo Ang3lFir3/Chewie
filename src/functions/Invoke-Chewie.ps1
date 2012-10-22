@@ -23,8 +23,6 @@ function Invoke-Chewie {
     $chewie.build_script_dir = $chewie.build_script_file.DirectoryName
     $chewie.success = $false
   
-    #Load-Configuration $chewie.build_script_dir
-  
     $chewie.Packages = @{}
     $chewie.ExecutedDependencies = new-object System.Collections.Stack
     $chewie.callStack = new-object System.Collections.Stack
@@ -36,6 +34,9 @@ function Invoke-Chewie {
 
     Invoke-NugetFile $chewie.build_script_file.FullName   
     
+    if($source) { Set-Source $source }
+    if($path) { Set-PackagePath $path }
+
     if ($packageList) {
       foreach ($package in $packageList) {
         Write-ColoredOutput "Invoke-Chew $task $package`n" -foregroundcolor DarkGreen
@@ -50,10 +51,8 @@ function Invoke-Chewie {
       throw $messages.error_no_dependencies
     }
     
-    Write-ColoredOutput ("`n" + $messages.Success + "`n") -foregroundcolor Green
-    
-    Write-TimeSummary $stopwatch.Elapsed
-    
+    Write-ColoredOutput ("`n" + $messages.Success + " : Took " + $stopwatch.Elapsed + "`n") -foregroundcolor Green
+
     $chewie.success = $true
   } catch {
     if ($chewie.verboseError) {

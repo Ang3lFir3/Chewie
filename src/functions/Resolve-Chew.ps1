@@ -32,4 +32,4 @@ function Resolve-Chew {
   $chewie.Packages.$packageKey = $newpackage
 }
 
-Set-Alias -Name Chew -Scope Script -Value Resolve-Chew
+Set-Alias -Name Chew -Value Resolve-Chew

@@ -10,4 +10,4 @@ function Assert-Condition {
   }
 }
 
-Set-Alias -Name Assert -Scope Script -Value Assert-Condition
+Set-Alias -Name Assert -Value Assert-Condition
