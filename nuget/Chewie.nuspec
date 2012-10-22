@@ -7,7 +7,7 @@
     <owners>Ang3lFir3,idavis</owners>
     <projectUrl>http://github.com/Ang3lFir3/Chewie/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Giving Nuget some of the awesomeness of Bundler for ruby gems</description>
+    <description>Giving Nuget some of the awesomeness of Bundler for ruby gems. This package should be installed only from Chocolatey or Visual Studio. Running with NuGet.exe will not execute the proper PowerShell scripts needed for installation.</description>
     <tags>Nuget Bundler Chewie</tags>
   </metadata>
 </package>
