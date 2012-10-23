@@ -2,7 +2,7 @@ function chewie {
 [CmdletBinding(DefaultParameterSetName='default')]
 param(
   [Parameter(Position=0,Mandatory=$false,HelpMessage="You must specify which task to execute.")]
-  [ValidateSet('install','update', 'uninstall', 'outdated', 'init', 'help', '?')]
+  [ValidateSet('install','update', 'uninstall', 'outdated', 'init', 'help', '?', 'convert')]
   [string] $task = "install",
   [Parameter(Position=1, Mandatory=$false)]
   [Parameter(ParameterSetName='install')]
@@ -21,6 +21,8 @@ param(
   [switch] $self,
   [Parameter(Position=2,Mandatory=$false,ParameterSetName='outdated')]
   [switch] $pre,
+  [Parameter(Position=2,Mandatory=$false,ParameterSetName='convert')]
+  [switch] $applyChanges,
   [Parameter(Position=4,Mandatory=$false)]
   [switch][alias("?")] $help = $false,
   [Parameter(Position=5,Mandatory=$false)]
@@ -44,6 +46,7 @@ param(
       Write-Documentation
       return
     }
+    if($nugetFile) { $chewie.nugetFile = $nugetFile }
 
     if($task -eq "init") {
       if(!(Test-Path $chewie.nugetFile)) {
@@ -56,7 +59,13 @@ param(
       return
     }
 
-    if($nugetFile) { $chewie.nugetFile = $nugetFile }
+    if($task -eq "convert") {
+      if([string]::IsNullOrEmpty($path)) {
+        $path = Resolve-Path .
+      }
+      ConvertTo-Chewie $path $applyChanges
+      return
+    }
 
     Invoke-Chewie $task $packageList $without
   } finally {
