@@ -19,7 +19,7 @@ function Resolve-NugetCommand {
   $command += " -o $(Get-SafeFilePath $chewie.path)"
   $maxVersion = Get-MaxCompatibleVersion $package.Name $package.Version
   $versionString = "$maxVersion".Trim()
-  if(![string]::IsNullOrEmpty($versionString)) { $command += " -v $versionString" }
+  if(![string]::IsNullOrEmpty($versionString)) { $command += " -version $versionString" }
   $source = $package.source
   if(![string]::IsNullOrEmpty($source)) { $command += " -s $source" }
   $command
