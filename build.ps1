@@ -16,9 +16,8 @@
 )
 
 if($bootstrap) {
-  $scriptPath = (Split-Path -parent $script:MyInvocation.MyCommand.Definition)
-  Import-Module $scriptPath\src\chewie.psm1
-  chewie install -nugetFile $scriptPath\.NugetFile
+  Import-Module (Join-Path (Split-Path -parent $script:MyInvocation.MyCommand.Definition) src\chewie.psm1)
+  chewie install
 }
 
 $psake = (Get-ChildItem . psake.ps1 -Recurse)
