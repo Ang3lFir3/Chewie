@@ -10,16 +10,23 @@
   [Parameter(Position=4,Mandatory=0)]
   [System.Collections.Hashtable]$parameters = @{},
   [Parameter(Position=5, Mandatory=0)]
-  [System.Collections.Hashtable]$properties = @{}
+  [System.Collections.Hashtable]$properties = @{},
+  [Parameter(Position=6, Mandatory=0)]
+  [switch]$bootstrap
 )
 
-$psake = (Get-ChildItem . psake.ps1 -Recurse)
-if($psake.Length -lt 1) {
-  $scriptPath = (Split-Path -parent $MyInvocation.MyCommand.Definition)
-  . $scriptPath\src\chewie.ps1 install -nugetFile $scriptPath\.NugetFile
+if($bootstrap) {
+  $scriptPath = (Split-Path -parent $script:MyInvocation.MyCommand.Definition)
+  Import-Module $scriptPath\src\chewie.psm1
+  chewie install -nugetFile $scriptPath\.NugetFile
 }
 
 $psake = (Get-ChildItem . psake.ps1 -Recurse)
+
+if(!$psake) {
+  Write-Error "psake not found. Please run '.\build -bootstrap' to install dependencies."
+  return
+}
 
 . $psake.Fullname $buildFile $taskList $framework $docs $parameters $properties
 exit $lastexitcode
