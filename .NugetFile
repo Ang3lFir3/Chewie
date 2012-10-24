@@ -2,5 +2,5 @@ install_to 'lib'
 
 new-group dev {
   chew 'Pester' '[1.0.6]'
-  chew 'psake' '[4.0.1.0]'
+  chew 'psake' '[4.2.0.1]'
 }
