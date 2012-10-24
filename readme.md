@@ -1,20 +1,13 @@
-## Getting started  
+## Getting Started
+See the Wiki for the moment.
+
+## Contributing to Chewie  
 To work on Chewie:
 1. Clone the repo
-2. execute .\build to have chewie bootstrap itself and run tests.
-
-## To package Chewie
-.\build -T Package
-
-## Trying out chewie during 2.0.0 prerelease
-
-Add your directory with the nupkg to a custom feed.
-
-### To install Chewie inside of VS
-install-package chewie -version 2.0.0
-
-### To install Chewie outside of VS
-nuget install chewie -x -v 2.0.0;.\Chewie\tools\init.ps1 "" $pwd\Chewie\tools  
+2. execute .\build -bootstrap to have chewie bootstrap itself (download dependencies) and run tests. If you try to just run build, it will fail as chewie won't download unless you are executing it on purpose.
+3. execute .\build after bootstrapping in order to run tests automatically.
+4. execute .\build -t package to create the NuGet/Chocolatey package
+5. execute .\build -t TestChocolatey in order to deploy the package you created locally. When you install Chewie via Chocolatey or Visual Studio, the initialization script will load it into the current user's PowerShell Modules folder. This makes the chewie command available in any PowerShell session.
 
 ##License  
 This software is released under the MIT License
