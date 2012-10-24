@@ -39,12 +39,10 @@ function Invoke-Chewie {
 
     if ($packageList) {
       foreach ($package in $packageList) {
-        Write-ColoredOutput "Invoke-Chew $task $package`n" -foregroundcolor DarkGreen
         Invoke-Chew $task $package
       }
     } elseif ($chewie.Packages) {
       foreach ($package in $chewie.Packages.Keys) {
-        Write-ColoredOutput "Invoke-Chew $task $package`n" -foregroundcolor DarkGreen
         Invoke-Chew $task $package
       }
     } else {
