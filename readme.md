@@ -3,6 +3,7 @@ See the Wiki for the moment.
 
 ## Contributing to Chewie  
 To work on Chewie:
+
 1. Clone the repo
 2. execute .\build -bootstrap to have chewie bootstrap itself (download dependencies) and run tests. If you try to just run build, it will fail as chewie won't download unless you are executing it on purpose.
 3. execute .\build after bootstrapping in order to run tests automatically.
