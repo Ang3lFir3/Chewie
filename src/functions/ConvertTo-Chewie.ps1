@@ -50,7 +50,7 @@ function ConvertTo-Chewie {
 
   Write-ColoredOutput "Creating $($chewie.nugetFile)"  -foregroundcolor DarkGreen
   New-Item $chewie.nugetFile -ItemType File | Out-Null
-  Add-Content $chewie.nugetFile "install_to 'lib'"
+  Add-Content $chewie.nugetFile "install_to 'packages'"
   Add-Content $chewie.nugetFile "IncludeVersion"
     
   $packages | % { 
