@@ -37,6 +37,7 @@ if(!$psake) {
   return
 }
 
+remove-module [p]sake
 import-module $psake
 Invoke-psake $buildFile $taskList $framework $docs $parameters $properties $initialization $nologo
 exit $lastexitcode
