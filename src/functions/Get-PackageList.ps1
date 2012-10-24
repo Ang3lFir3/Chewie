@@ -1,7 +1,8 @@
 ﻿
 function Get-PackageList {
-  param([string]$packageName)
-  $url = $chewie.feed_uri + ($chewie.feed_package_filter -f $packageName)
+  param([string]$packageName, [string]$source)
+  if([string]::IsNullOrEmpty($source)) { $source = $chewie.feed_uri }
+  $url = $source + ($chewie.feed_package_filter -f $packageName)
   $wc = $null
   try {
     $wc = New-Object Net.WebClient
