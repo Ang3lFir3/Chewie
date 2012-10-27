@@ -48,9 +48,6 @@ function Invoke-Chewie {
     } else {
       throw $messages.error_no_dependencies
     }
-    
-    Write-ColoredOutput ("`n" + $messages.Success + " : Took " + $stopwatch.Elapsed + "`n") -foregroundcolor Green
-
     $chewie.success = $true
   } catch {
     if ($chewie.verboseError) {
