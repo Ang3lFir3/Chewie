@@ -26,6 +26,7 @@ function Load-Configuration {
   $chewie.version = "2.0.0beta"
   $chewie.originalErrorActionPreference = $global:ErrorActionPreference
   $chewie.default_group_name = "default"
+  $chewie.path = 'lib'
   if($nugetFile) {
     $chewie.nugetFile = $nugetFile
   } else {
@@ -33,7 +34,7 @@ function Load-Configuration {
   }
   $chewie.packageNameFormat = "{0} {1}"
   $chewie.logo = "Chewie version {0}`nCopyright (c) 2012 Eric Ridgeway, Ian Davis`n" -f $chewie.version
-  $chewie.verboseError = $true
+  $chewie.verboseError = $false
   $chewie.coloredOutput = $true
   $chewie.version_packages = $false
   $chewie.sources = (Get-PackageSources)
