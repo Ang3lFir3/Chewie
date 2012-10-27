@@ -36,6 +36,7 @@ param(
 
     if ($debug) {
       $chewie.DebugPreference = "Continue"
+      $chewie.verboseError = $true
     }
 
     if (-not $nologo) {
@@ -46,6 +47,7 @@ param(
       Write-Documentation
       return
     }
+
     if($nugetFile) { $chewie.nugetFile = $nugetFile }
 
     if($task -eq "init") {
@@ -69,7 +71,7 @@ param(
 
     Invoke-Chewie $task $packageList $without
   } finally {
-   if(Get-Module chewie) {Remove-Module chewie -Force}
-   rm function:\chewie
+    Remove-Module [c]hewie -Force
+    Remove-Item function:\[c]hew
  }
 }

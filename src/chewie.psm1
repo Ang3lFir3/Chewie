@@ -21,6 +21,9 @@
 
 #Requires -Version 2.0
 
+Remove-Module [c]hewie -Force
+Remove-Item function:\[c]hewie
+
 $here = (Split-Path -parent $MyInvocation.MyCommand.Definition)
 
 Resolve-Path $here\*.ps1 | % { . $_.ProviderPath }

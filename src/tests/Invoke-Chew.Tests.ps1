@@ -61,6 +61,7 @@ Describe "Ensure-PackagesAreUpdatedCorrectly" {
   Install-Ninject
   . "$here\_Common.ps1"
   Setup-NuGetFile "chew 'ninject' '[2.1.0.76]'"
+  $chewie.path = "TestDrive:\base\lib"
   Invoke-Chew update ninject
   It "should not update package when no compatible version is available" {
     (Get-InstalledPackageVersion ninject).Version.ToString().should.be("2.1.0.76")

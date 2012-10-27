@@ -16,7 +16,11 @@ Task CreateNuGetPackage {
 }
 
 Task TestChocolatey {
-  cinst chewie -source "$pwd"
+  $target = Get-Item $env:ChocolateyInstall\lib\Chewie*
+  if(Test-Path $target.FullName) {
+    Remove-Item -Recurse -Force $target.FullName
+  }
+  cinst chewie -force -source "$pwd"
 }
 
 Task ? {

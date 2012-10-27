@@ -11,16 +11,12 @@ function Invoke-Chewie {
   )
   
   try {
-    $nugetFile = $chewie.nugetFile
-    if ($nugetFile -and !(test-path $nugetFile -pathType Leaf) -and (test-path $chewie.nugetFileName -pathType Leaf)) {
-      $nugetFile = $chewie.nugetFileName
+    if($packageList -eq $null -or $packageList.Length -eq 0) {
+      # make sure we can execute the nugetfile to set up the dependencies
+      Assert (test-path $chewie.nugetFile -pathType Leaf) ($messages.error_nugetfile_file_not_found -f $chewie.nugetFile)
+      $chewie.build_script_file = Get-Item $chewie.nugetFile
     }
 
-    # Execute the build file to set up the dependencies and defaults
-    Assert (test-path $nugetFile -pathType Leaf) ($messages.error_nugetfile_file_not_found -f $nugetFile)
-
-    $chewie.build_script_file = Get-Item $nugetFile
-    $chewie.build_script_dir = $chewie.build_script_file.DirectoryName
     $chewie.success = $false
   
     $chewie.Packages = @{}
@@ -30,8 +26,11 @@ function Invoke-Chewie {
     $chewie.originalDirectory = get-location
     $chewie.chews = New-Object Collections.Queue
 
-    Invoke-NugetFile $chewie.build_script_file.FullName   
-    
+    if($chewie.build_script_file) {
+      Invoke-NugetFile $chewie.build_script_file.FullName
+    }
+
+    # Override the .NuGetFile
     if($source) { Set-Source $source }
     if($path) { Set-PackagePath $path }
 
