@@ -14,7 +14,6 @@ function Invoke-Chewie {
     if($packageList -eq $null -or $packageList.Length -eq 0) {
       # make sure we can execute the nugetfile to set up the dependencies
       Assert (test-path $chewie.nugetFile -pathType Leaf) ($messages.error_nugetfile_file_not_found -f $chewie.nugetFile)
-      $chewie.build_script_file = Get-Item $chewie.nugetFile
     }
 
     $chewie.success = $false
@@ -26,7 +25,8 @@ function Invoke-Chewie {
     $chewie.originalDirectory = get-location
     $chewie.chews = New-Object Collections.Queue
 
-    if($chewie.build_script_file) {
+    if($chewie.build_script_file -and (Test-Path $chewie.nugetFile)) {
+      $chewie.build_script_file = Get-Item $chewie.nugetFile
       Invoke-NugetFile $chewie.build_script_file.FullName
     }
 
