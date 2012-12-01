@@ -38,7 +38,7 @@ Task DeployLocal -depends Package,TestChocolatey
 
 Task TestChocolatey {
   $target = Get-Item $env:ChocolateyInstall\lib\Chewie*
-  if(Test-Path $target.FullName) {
+  if($target -ne $null -and (Test-Path $target.FullName)) {
     Remove-Item -Recurse -Force $target.FullName
   }
   cinst chewie -force -source "$pwd"

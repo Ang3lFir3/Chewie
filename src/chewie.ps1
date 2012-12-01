@@ -2,7 +2,7 @@ function chewie {
   [CmdletBinding()]
   param(
   [Parameter(Position=0,Mandatory=$true,ParameterSetName='install')]
-  [switch] $install = $false,
+  [switch] $install = $true,
   [Parameter(Position=0,Mandatory=$true,ParameterSetName='update')]
   [switch] $update = $false,
   [Parameter(Position=0,Mandatory=$true,ParameterSetName='uninstall')]
@@ -15,45 +15,57 @@ function chewie {
   [switch] $convert = $false,
   [Parameter(Position=0,Mandatory=$true,ParameterSetName='downloadNuGet')]
   [switch] $downloadNuGet = $false,
+  [Parameter(Position=0,Mandatory=$true,HelpMessage="You must specify which task to execute.")]
+  [ValidateSet('install','update', 'uninstall', 'outdated', 'init', 'help', '?', 'convert')]
+  [Parameter(ParameterSetName='taskbound')]
+  [string] $task,
+  [Parameter(ParameterSetName='install')]
+  [Parameter(ParameterSetName='update')]
+  [Parameter(ParameterSetName='uninstall')]
+  [Parameter(ParameterSetName='outdated')]
+  [Parameter(ParameterSetName='taskbound')]
+  [Parameter(ParameterSetName='init')]
+  [Parameter(Position=1, Mandatory=$false)]
+  [AllowEmptyString()]
+  [AllowNull()]
+  [string]$package = "",
   [Parameter(ParameterSetName='install')]
   [Parameter(ParameterSetName='update')]
   [Parameter(ParameterSetName='uninstall')]
   [Parameter(ParameterSetName='outdated')]
   [Parameter(ParameterSetName='init')]
+  [Parameter(ParameterSetName='taskbound')]
   [AllowEmptyString()]
   [AllowNull()]
-  [Parameter(Position=1,Mandatory=$false)]
+  [Parameter(Position=2,Mandatory=$false)]
   [string] $path,
   [Parameter(ParameterSetName='install')]
   [Parameter(ParameterSetName='update')]
   [Parameter(ParameterSetName='uninstall')]
   [Parameter(ParameterSetName='outdated')]
   [Parameter(ParameterSetName='init')]
+  [Parameter(ParameterSetName='taskbound')]
   [AllowEmptyString()]
   [AllowNull()]
-  [Parameter(Position=2,Mandatory=$false)]
+  [Parameter(Position=3,Mandatory=$false)]
   [string] $source,
   [Parameter(ParameterSetName='install')]
   [Parameter(ParameterSetName='update')]
   [Parameter(ParameterSetName='uninstall')]
   [Parameter(ParameterSetName='outdated')]
   [Parameter(ParameterSetName='init')]
+  [Parameter(ParameterSetName='taskbound')]
   [AllowEmptyString()]
   [AllowNull()]
-  [Parameter(Position=3,Mandatory=$false)]
+  [Parameter(Position=4,Mandatory=$false)]
   [string] $nugetFile = $null,
-  [Parameter(ParameterSetName='install')]
-  [Parameter(ParameterSetName='update')]
-  [Parameter(ParameterSetName='uninstall')]
-  [Parameter(ParameterSetName='outdated')]
-  [Parameter(Position=4, Mandatory=$false)]
-  [AllowEmptyString()]
-  [AllowNull()]
-  [string]$package = "",
-  [Parameter(Position=1,Mandatory=$false,ParameterSetName='update')]
+  [Parameter(ParameterSetName='taskbound')]
+  [Parameter(Position=5,Mandatory=$false,ParameterSetName='update')]
   [switch] $self,
-  [Parameter(Position=1,Mandatory=$false,ParameterSetName='outdated')]
+  [Parameter(ParameterSetName='taskbound')]
+  [Parameter(Position=5,Mandatory=$false,ParameterSetName='outdated')]
   [switch] $pre,
+  [Parameter(ParameterSetName='taskbound')]
   [Parameter(Position=1,Mandatory=$false,ParameterSetName='convert')]
   [switch] $applyChanges,
   [Parameter(ParameterSetName='install')]
@@ -63,10 +75,16 @@ function chewie {
   [Parameter(ParameterSetName='init')]
   [Parameter(ParameterSetName='convert')]
   [Parameter(ParameterSetName='downloadNuGet')]
+  [Parameter(ParameterSetName='taskbound')]
   [Parameter(Mandatory=$false)]
   [switch] $nologo = $false
   )
-  $task = $PSCmdlet.ParameterSetName
+  if($PSCmdlet.ParameterSetName -ne "taskbound") {
+    $task = $PSCmdlet.ParameterSetName
+  } else {
+    Set-Variable $task -Value $true
+  }
+
   $here = (Split-Path -parent $script:MyInvocation.MyCommand.path)
 
   if(!$skipFileLoading) {

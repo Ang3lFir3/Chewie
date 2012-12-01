@@ -32,8 +32,8 @@ function Load-Configuration {
   } else {
     $chewie.nugetFile = ".NugetFile"
   }
-  $chewie.packageNameFormat = "{0} {1}"
-  $chewie.logo = "Chewie version {0}`nCopyright (c) 2012 Eric Ridgeway, Ian Davis`n" -f $chewie.version
+  $chewie.packageNameFormat = "Executing task {0} for package {1}"
+  $chewie.logo = "Chewie version {0}`nCopyright (c) 2012 Eric Ridgeway, Ian Davis" -f $chewie.version
   $chewie.verboseError = $false
   $chewie.coloredOutput = $true
   $chewie.version_packages = $false

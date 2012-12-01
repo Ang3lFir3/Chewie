@@ -23,13 +23,13 @@ function Invoke-Chew {
   try {
     $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
     $chewie.currentpackageName = $packageName
-
-    if ($chewie.packageNameFormat -is [ScriptBlock]) {
-      & $chewie.packageNameFormat $task $packageName
-    } else {
-      Write-ColoredOutput ($chewie.packageNameFormat -f $task, $packageName) -foregroundcolor Cyan
+    if ($PSBoundParameters['Verbose']) {
+      if ($chewie.packageNameFormat -is [ScriptBlock]) {
+        & $chewie.packageNameFormat $task $packageName
+      } else {
+        Write-ColoredOutput ($chewie.packageNameFormat -f $task, $packageName) -foregroundcolor Cyan
+      }
     }
-    
     if($task -eq "uninstall") {
       if(!(Test-PackageInstalled $packageName)) {
         Write-ColoredOutput "Could not uninstall $packageName. It is not installed." -foregroundcolor Magenta
@@ -45,7 +45,7 @@ function Invoke-Chew {
     }
 
     if($task -eq "outdated") {
-      if(Test-Outdated $package.Name $package.Version) {
+      if(Test-Outdated $package.Name $package.Version $package.Source ($package.Prerelease -or $pre)) {
         Write-ColoredOutput "Package $($package.name) is outdated" -ForegroundColor Green
       } else {
         Write-ColoredOutput "Package $($package.name) is up-to-date" -ForegroundColor Green
@@ -55,7 +55,7 @@ function Invoke-Chew {
     
     if($task -eq "update") {
       Write-ColoredOutput "Package $($package.name) $($package.version) is being updated." -ForegroundColor Green
-      [bool]$isOutdated = Test-Outdated $package.Name $package.Version
+      [bool]$isOutdated = Test-Outdated $package.Name $package.Version  $package.Source ($package.Prerelease -or $pre)
       if($isOutdated) {
         Write-ColoredOutput "Package $($package.name) is outdated. Updating package." -ForegroundColor Green
         Invoke-Chew "uninstall" $packageName
