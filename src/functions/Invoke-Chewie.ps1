@@ -24,13 +24,14 @@ function Invoke-Chewie {
     $chewie.originalEnvPath = $env:path
     $chewie.originalDirectory = get-location
     $chewie.chews = New-Object Collections.Queue
-
-    if($chewie.build_script_file -and (Test-Path $chewie.nugetFile)) {
+    
+    if(Test-Path $chewie.nugetFile) {
       $chewie.build_script_file = Get-Item $chewie.nugetFile
+      Write-Debug "Invoke-NugetFile $($chewie.build_script_file.FullName)"
       Invoke-NugetFile $chewie.build_script_file.FullName
     }
 
-    # Override the .NuGetFile
+    # Override the .NuGetFile contents for the defaults.
     if($source) { Set-Source $source }
     if($path) { Set-PackagePath $path }
 

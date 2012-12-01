@@ -47,5 +47,11 @@ Describe "Ensure-VersionsAreParsedFromFileNames" {
     $results[0].Pre.should.be("alpha1")
     $results[1].Pre.should.be("beta1")
   }
+  It "should handle prereleases with build numbers" {
+    $version = "2.0.0alpha-build1611"
+    $result = Get-VersionFromString $version
+    $result.Version.should.be((new-object Version "2", "0", "0"))
+    $result.Pre.should.be("alpha-build1611")
+  }
 }
 

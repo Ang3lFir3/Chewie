@@ -14,7 +14,7 @@ function Invoke-Chew {
   
   if(!$chewie.Packages.Contains($packageKey)) {
     Write-ColoredOutput ($messages.warn_package_not_in_nugetfile -f $packageName) -ForegroundColor Magenta
-    Resolve-Chew $packageName
+    Resolve-Chew $packageName -prerelease $prerelease
   }
   $package = $chewie.Packages.$packageKey
   
@@ -54,7 +54,7 @@ function Invoke-Chew {
     }
     
     if($task -eq "update") {
-      Write-ColoredOutput "Package $($package.name) v$($package.version) is being updated." -ForegroundColor Green
+      Write-ColoredOutput "Package $($package.name) $($package.version) is being updated." -ForegroundColor Green
       [bool]$isOutdated = Test-Outdated $package.Name $package.Version
       if($isOutdated) {
         Write-ColoredOutput "Package $($package.name) is outdated. Updating package." -ForegroundColor Green
@@ -78,7 +78,7 @@ function Invoke-Chew {
 
     $package.Duration = $stopwatch.Elapsed
   } catch {
-    if ($package.ContinueOnError) {
+    if ($chewie.DebugPreference -eq "Continue") {
       "-"*70
       Write-ColoredOutput ($messages.continue_on_error -f $packageName,$_) -foregroundcolor Magenta
       "-"*70

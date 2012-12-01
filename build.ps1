@@ -25,8 +25,9 @@
 )
 
 if($bootstrap) {
-  Import-Module (Join-Path (Split-Path -parent $script:MyInvocation.MyCommand.Definition) src\chewie.psm1)
-  chewie install
+  Write-Host "bootstrapping"
+  $file = "$scriptPath\.NugetFile"
+  . "$scriptPath\src\chewie.ps1" install -nugetFile $file
   return
 }
 

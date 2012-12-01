@@ -20,7 +20,7 @@ function Load-Configuration {
   param(
     [string] $configdir = $PSScriptRoot
   )
-  if(!$chewie) {
+  if(!$script:chewie) {
     $script:chewie = @{}
   }
   $chewie.version = "2.0.0beta"

@@ -12,7 +12,7 @@ function New-NuGetVersion {
       Add-Member -PassThru NoteProperty Version $targetVersion |
       Add-Member -PassThru NoteProperty Pre $prerelease |
       Add-Member -PassThru NoteProperty Build $build |
-      Add-Member -PassThru -Force ScriptMethod ToString { "{0}{1}{2}" -f @($this.Version, $this.Pre, $this.Build) }
+      Add-Member -PassThru -Force ScriptMethod ToString { ("{0}-{1}-{2}" -f @($this.Version, $this.Pre, $this.Build)).Trim('-') }
     $result
   } else {
     $null
