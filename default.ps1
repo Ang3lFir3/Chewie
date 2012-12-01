@@ -28,7 +28,9 @@ Task Test {
 }
 
 Task CreateNuGetPackage {
+  #& $rootDir\NuGetPackageBuilder.cmd
   Copy-Item "$rootDir\nuget\*" $binDir
+  Copy-Item "$rootDir\chocolateyInstall.ps1" $toolsDir
   & nuget pack $binDir\Chewie.nuspec
 }
 
@@ -54,5 +56,5 @@ Task Coalesce {
 }
 
 Task ? {
-  Write-Documentation
+ Write-Documentation
 }
