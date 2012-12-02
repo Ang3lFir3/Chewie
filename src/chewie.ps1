@@ -15,9 +15,8 @@ function chewie {
   [switch] $convert = $false,
   [Parameter(Position=0,Mandatory=$true,ParameterSetName='downloadNuGet')]
   [switch] $downloadNuGet = $false,
-  [Parameter(Position=0,Mandatory=$true,HelpMessage="You must specify which task to execute.")]
+  [Parameter(Position=0,Mandatory=$true,ParameterSetName='taskbound',HelpMessage="You must specify which task to execute.")]
   [ValidateSet('install','update', 'uninstall', 'outdated', 'init', 'help', '?', 'convert', 'downloadNuGet')]
-  [Parameter(ParameterSetName='taskbound')]
   [string] $task,
   [Parameter(ParameterSetName='install')]
   [Parameter(ParameterSetName='update')]
@@ -60,9 +59,6 @@ function chewie {
   [Parameter(Position=4,Mandatory=$false)]
   [string] $nugetFile = $null,
   [Parameter(ParameterSetName='taskbound')]
-  [Parameter(Position=6,Mandatory=$false,ParameterSetName='update')]
-  [switch] $self,
-  [Parameter(ParameterSetName='taskbound')]
   [Parameter(ParameterSetName='install')]
   [Parameter(ParameterSetName='update')]
   [Parameter(ParameterSetName='outdated')]
@@ -85,7 +81,7 @@ function chewie {
   if($PSCmdlet.ParameterSetName -ne "taskbound") {
     $task = $PSCmdlet.ParameterSetName
   } else {
-    Set-Variable $task -Value $true
+    Set-Variable $task -Value $true -ErrorAction SilentlyContinue
   }
 
   $here = (Split-Path -parent $script:MyInvocation.MyCommand.path)
