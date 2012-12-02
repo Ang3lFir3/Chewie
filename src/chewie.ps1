@@ -87,7 +87,12 @@ function chewie {
   $here = (Split-Path -parent $script:MyInvocation.MyCommand.path)
 
   if(!$skipFileLoading) {
-    Resolve-Path $here\functions\*.ps1 | % { Write-Host "Loading $_"; . $_.ProviderPath }
+    Resolve-Path $here\functions\*.ps1 | % { 
+      if ($PSBoundParameters['Verbose']) {
+        Write-ColoredOutput "Loading $_" -foregroundcolor Yellow
+      }
+      . $_.ProviderPath
+    }
   }
 
   Load-Configuration

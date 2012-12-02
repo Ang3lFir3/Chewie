@@ -25,7 +25,7 @@
 )
 
 if($bootstrap) {
-  Write-Host "bootstrapping"
+  Write-Host "Bootstrapping chewie with chewie"
   $file = "$scriptPath\.NugetFile"
   . "$scriptPath\src\chewie.ps1" install -nugetFile $file
   return
