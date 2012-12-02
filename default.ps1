@@ -41,7 +41,7 @@ Task TestChocolatey {
   if($target -ne $null -and (Test-Path $target.FullName)) {
     Remove-Item -Recurse -Force $target.FullName
   }
-  cinst chewie -force -source "$pwd"
+  cinst chewie -pre -force -source "$pwd"
 }
 
 Task Coalesce {
