@@ -60,10 +60,13 @@ function chewie {
   [Parameter(Position=4,Mandatory=$false)]
   [string] $nugetFile = $null,
   [Parameter(ParameterSetName='taskbound')]
-  [Parameter(Position=5,Mandatory=$false,ParameterSetName='update')]
+  [Parameter(Position=6,Mandatory=$false,ParameterSetName='update')]
   [switch] $self,
   [Parameter(ParameterSetName='taskbound')]
-  [Parameter(Position=5,Mandatory=$false,ParameterSetName='outdated')]
+  [Parameter(ParameterSetName='install')]
+  [Parameter(ParameterSetName='update')]
+  [Parameter(ParameterSetName='outdated')]
+  [Parameter(Position=5,Mandatory=$false)]
   [switch] $pre,
   [Parameter(ParameterSetName='taskbound')]
   [Parameter(Position=1,Mandatory=$false,ParameterSetName='convert')]

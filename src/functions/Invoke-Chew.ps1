@@ -17,7 +17,7 @@ function Invoke-Chew {
     Resolve-Chew $packageName -prerelease $prerelease
   }
   $package = $chewie.Packages.$packageKey
-  
+  $package.Prerelease = ($package.Prerelease -or $pre)
   if ($chewie.ExecutedDependencies.Contains($packageKey))  { return }
 
   try {
@@ -45,7 +45,7 @@ function Invoke-Chew {
     }
 
     if($task -eq "outdated") {
-      if(Test-Outdated $package.Name $package.Version $package.Source ($package.Prerelease -or $pre)) {
+      if(Test-Outdated $package.Name $package.Version $package.Source $package.Prerelease) {
         Write-ColoredOutput "Package $($package.name) is outdated" -ForegroundColor Green
       } else {
         Write-ColoredOutput "Package $($package.name) is up-to-date" -ForegroundColor Green
@@ -55,7 +55,8 @@ function Invoke-Chew {
     
     if($task -eq "update") {
       Write-ColoredOutput "Package $($package.name) $($package.version) is being updated." -ForegroundColor Green
-      [bool]$isOutdated = Test-Outdated $package.Name $package.Version  $package.Source ($package.Prerelease -or $pre)
+
+      [bool]$isOutdated = Test-Outdated $package.Name $package.Version  $package.Source $package.Prerelease
       if($isOutdated) {
         Write-ColoredOutput "Package $($package.name) is outdated. Updating package." -ForegroundColor Green
         Invoke-Chew "uninstall" $packageName
