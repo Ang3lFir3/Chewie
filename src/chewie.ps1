@@ -16,7 +16,7 @@ function chewie {
   [Parameter(Position=0,Mandatory=$true,ParameterSetName='downloadNuGet')]
   [switch] $downloadNuGet = $false,
   [Parameter(Position=0,Mandatory=$true,HelpMessage="You must specify which task to execute.")]
-  [ValidateSet('install','update', 'uninstall', 'outdated', 'init', 'help', '?', 'convert')]
+  [ValidateSet('install','update', 'uninstall', 'outdated', 'init', 'help', '?', 'convert', 'downloadNuGet')]
   [Parameter(ParameterSetName='taskbound')]
   [string] $task,
   [Parameter(ParameterSetName='install')]

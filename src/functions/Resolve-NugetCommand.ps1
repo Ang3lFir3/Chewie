@@ -6,10 +6,12 @@ function Resolve-NugetCommand {
   )
   $nuGetIsInPath = @(get-command nuget.bat*,nuget.exe*,nuget.cmd* -ErrorAction SilentlyContinue).Length -gt 0
   $command = ""
+  $here = "$(Split-Path -parent $script:MyInvocation.MyCommand.path)"
+  $localInstall = (Join-Path $here "NuGet.exe")
   if($nuGetIsInPath) {
     $command += "NuGet install" 
-  } elseif(Test-Path .\nuget.exe) {
-    $command = "$(Split-Path -parent $script:MyInvocation.MyCommand.path)\NuGet.exe install"
+  } elseif(Test-Path $localInstall) {
+    $command =  $localInstall + " install"
   } else {
     Assert (@(get-command install-package -ErrorAction SilentlyContinue).Length -eq 1) $messages.error_no_valid_nuget_command_found
     $command += "install-package"  
