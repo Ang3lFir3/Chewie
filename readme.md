@@ -1,5 +1,6 @@
 ## Getting Started
-See the Wiki for the moment.
+Watch this [video](https://vimeo.com/54695717).  
+See the Wiki.
 
 ## Contributing to Chewie  
 To work on Chewie:
