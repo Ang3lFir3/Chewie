@@ -1,6 +1,10 @@
-## Getting Started
+## Getting Started  
 Watch this [video](https://vimeo.com/54695717).  
 See the Wiki.
+
+## Requirements
+Chewie works best when teamed up with it's friend:  
+[Powershell 3.0](http://www.microsoft.com/en-us/download/details.aspx?id=34595)
 
 ## Contributing to Chewie  
 To work on Chewie:
